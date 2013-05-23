@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<string name="welcome">Welcome to %s!</string>
+	
+	<string name="newlyTabTitle">新着</string>
+	<string name="groupTabTitle">グループ</string>
+	<string name="otherTabTitle">その他</string>
+	<string name="boardTabTitle">掲示板</string>
+	<string name="todoTabTitle">ToDo</string>
+	<string name="eventTabTitle">イベント</string>
+	<string name="cabinetTabTitle">ファイル</string>
+	
+	<string name="loginWindowTitle">ログイン</string>
+	<string name="loginWindowUserId">ユーザID</string>
+	<string name="loginWindowPassword">パスワード</string>
+	<string name="loginWindowLogin">ログイン</string>
+	
+	<string name="newlyWindowTitle">新着情報</string>
+</resources>

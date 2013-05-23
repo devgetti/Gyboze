@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+provisioning_profiles/development/CD81E46F-522C-4B9E-A289-3E76917E4B9F/appid=jp.co.nssol.sysrdc.recho
+provisioning_profiles/development/CD81E46F-522C-4B9E-A289-3E76917E4B9F/filepath=/Users/akosuge/Library/MobileDevice/Provisioning Profiles/CD81E46F-522C-4B9E-A289-3E76917E4B9F.mobileprovision
+provisioning_profiles/development/CD81E46F-522C-4B9E-A289-3E76917E4B9F/name=Recho_Dev
+provisioning_profiles/development/CD81E46F-522C-4B9E-A289-3E76917E4B9F/uuid=CD81E46F-522C-4B9E-A289-3E76917E4B9F
+provisioning_profiles/development/E38978F6-4B8E-45E4-A289-798316C421AB/appid=*
+provisioning_profiles/development/E38978F6-4B8E-45E4-A289-798316C421AB/filepath=/Users/akosuge/Library/MobileDevice/Provisioning Profiles/E38978F6-4B8E-45E4-A289-798316C421AB.mobileprovision
+provisioning_profiles/development/E38978F6-4B8E-45E4-A289-798316C421AB/name=PioAP_DEMO_devel
+provisioning_profiles/development/E38978F6-4B8E-45E4-A289-798316C421AB/uuid=E38978F6-4B8E-45E4-A289-798316C421AB
