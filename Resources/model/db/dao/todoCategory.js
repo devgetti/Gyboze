@@ -1,7 +1,7 @@
 var util = require('model/util');
 
-function todoCategory(db) {
-	this.db = db;
+function todoCategory(db, option) {
+	this.__super__(db, option);
 	this.TABLE_NAME = 'todoCategory';
 	this.columns = {
 		'groupId': 'CHAR',
@@ -11,6 +11,5 @@ function todoCategory(db) {
 	};
 	this.primaryKey = ['id'];
 };
-todoCategory.prototype = util.createObject(require('model/db/dao/base'));
 
-module.exports = todoCategory;
+module.exports = util.inherit(todoCategory, require('model/db/dao/base'));

@@ -1,14 +1,10 @@
-Welcome to your Appcelerator Titanium Mobile Project
+This Program is a Experimental ClientApp For CybozeLive.
 
-This is a single window application with a single view - a mostly blank canvas. Requires Titanium Mobile SDK 1.8.0+
+思想的なこと
+・ピンポイントな機能のライブラリは使っても、MVCフレームワークは使わないようにしよう。
+・MVCを分けるよう意識する。
+・DBはopenしたまま落ちたりするとlockされたままになる時があったりする。利用するときだでopen、closeするようにする。
 
 ----------------------------------
-Stuff our legal folk make us say:
+by getti
 
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
-
-Titanium is Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.

@@ -1,7 +1,7 @@
 var util = require('model/util');
 
-function group(db) {
-	this.db = db;
+function group(db, option) {
+	this.__super__(db, option);
 	this.TABLE_NAME = 'groups';	// SQLiteで'group'は予約語らしい
 	this.columns = {
 		'id': 'CHAR',
@@ -14,6 +14,5 @@ function group(db) {
 	};
 	this.primaryKey = ['id'];
 };
-group.prototype = util.createObject(require('model/db/dao/base'));
 
-module.exports = group;
+module.exports = util.inherit(group, require('model/db/dao/base'));

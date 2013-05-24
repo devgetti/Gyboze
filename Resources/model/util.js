@@ -12,6 +12,22 @@ exports.createObject = function(type) {
 	return new f();
 };
 
+exports.inherit = function(subClass, superClass) {
+    subClass.prototype = exports.createObject(superClass);
+    subClass.prototype.constructor = subClass;
+    subClass.prototype.__super__ = function () {
+        var originalSuper = this.__super__;
+        this.__super__ = superClass.prototype.__super__ || null;
+        superClass.apply(this, arguments);
+        if (this.constructor == subClass)
+            delete this.__super__;
+        else
+            this.__super__ = originalSuper;
+    };
+    return subClass;
+};
+
+
 /**
  * 
  * @param {Object} obj

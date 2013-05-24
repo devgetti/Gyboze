@@ -4,46 +4,8 @@ function db(dbName) {
 	this.table = { };
 };
 
-db.prototype.createDB = function() {
-	var self = this;
-	self.open();
-	self.table.group.cmdCreate();
-	self.table.boardCategory.cmdCreate();
-	self.table.todoCategory.cmdCreate();
-	self.table.board.cmdCreate();
-	self.table.cabinet.cmdCreate();
-	self.table.cabinetFolder.cmdCreate();
-	self.table.schedule.cmdCreate();
-	self.table.todo.cmdCreate();
-	self.close();
-};
-
-db.prototype.dropDB = function() {
-	var self = this;
-	self.open();
-	self.table.group.cmdDrop();
-	self.table.boardCategory.cmdDrop();
-	self.table.todoCategory.cmdDrop();
-	self.table.board.cmdDrop();
-	self.table.cabinet.cmdDrop();
-	self.table.cabinetFolder.cmdDrop();
-	self.table.schedule.cmdDrop();
-	self.table.todo.cmdDrop();
-	self.close();
-};
-
 db.prototype.open = function() {
 	this.db = Titanium.Database.open(this.dbName);
-	this.table = {
-		group: new (require('model/db/dao/group'))(this),
-		boardCategory: new (require('model/db/dao/boardCategory'))(this),
-		todoCategory: new (require('model/db/dao/todoCategory'))(this),
-		board: new (require('model/db/dao/board'))(this),
-		cabinet: new (require('model/db/dao/cabinet'))(this),
-		cabinetFolder: new (require('model/db/dao/cabinetFolder'))(this),
-		schedule: new (require('model/db/dao/schedule'))(this),
-		todo: new (require('model/db/dao/todo'))(this)
-	};	
 };
 
 db.prototype.close = function() {

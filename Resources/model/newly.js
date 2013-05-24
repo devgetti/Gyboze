@@ -1,11 +1,28 @@
 var util = require('model/util');
 
 function newly(db, cyboze) {
+	this.__super__();
 	this.db = db;
 	this.cyboze = cyboze;
 	this.listeners = {};
 };
-newly.prototype = util.createObject(require('model/base'));
+module.exports = util.inherit(newly, require('model/base'));
+
+// === GETTER =======================
+
+newly.prototype.getNewlyList = function(groupId, id) {
+	var self = this;
+	var result = [];
+	
+	var param = {};
+	if(groupId) param['groupId'] = groupId;
+	if(id) param['id'] = id;
+	
+	self.db.open();
+	result = self.db.table.newly.cmdSelectForList(param, 10);
+	self.db.close();
+	return result;
+};
 
 newly.prototype.chkNewly = function() {
 	var self = this;
@@ -65,20 +82,3 @@ newly.prototype.chkNewly = function() {
 	});
 };
 
-// === GETTER =======================
-
-newly.prototype.getNewlyList = function(groupId, id) {
-	var self = this;
-	var result = [];
-	
-	var param = {};
-	if(groupId) param['groupId'] = groupId;
-	if(id) param['id'] = id;
-	
-	self.db.open();
-	result = self.tblNewly.cmdSelectForList(param, 10);
-	self.db.close();
-	return result;
-};
-
-module.exports = newly;

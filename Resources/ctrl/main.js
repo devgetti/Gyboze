@@ -16,6 +16,32 @@ Application.prototype.appStart = function() {
 	var self = this;
 
 	// === 起動時ロジック ===========================================
+	var optDb = { autoConnect: true };
+	self.db.table = {
+		group: new (require('model/db/dao/group'))(self.db, optDb),
+		boardCategory: new (require('model/db/dao/boardCategory'))(self.db, optDb),
+		todoCategory: new (require('model/db/dao/todoCategory'))(self.db, optDb),
+		board: new (require('model/db/dao/board'))(self.db, optDb),
+		cabinet: new (require('model/db/dao/cabinet'))(self.db, optDb),
+		cabinetFolder: new (require('model/db/dao/cabinetFolder'))(self.db, optDb),
+		schedule: new (require('model/db/dao/schedule'))(self.db, optDb),
+		todo: new (require('model/db/dao/todo'))(self.db, optDb)
+	};
+	self.db.createDB = function() {
+		self.db.open();
+		for(var key in self.db.table) {
+			self.db.table[key].cmdCreate();
+		}
+		self.db.close();
+	};
+	self.db.dropDB = function() {
+		self.db.open();
+		for(var key in self.db.table) {
+			self.db.table[key].cmdCreate();
+		}
+		self.db.close();
+	};
+	
 	{
 		var version = Ti.App.getVersion();
 		var current = Ti.App.Properties.getString('System.Version', 0);

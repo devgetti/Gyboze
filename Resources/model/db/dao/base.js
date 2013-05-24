@@ -4,11 +4,13 @@ var util = require('model/util');
  * 
  * @param {Object} db
  */
-function base(db) {
+function base(db, options) {
 	this.db = db;
 	this.TABLE_NAME = '';
 	this.columns = {};
 	this.primaryKey = [];
+	if (!options) { options = {}; }
+	this.autoConnect = options.autoConnect || false;
 };
 
 base.prototype.isExists = function() {
@@ -16,7 +18,8 @@ base.prototype.isExists = function() {
 	var result = false;
 	var schema = '';
 	schema = 'SELECT COUNT(*) CNT FROM sqlite_master WHERE type= ? and name= ? ';
-	var rows = self.db.fetch(self.db.execute(schema, 'table', self.TABLE_NAME), ['CNT']);
+	var result = self.execute(function(){ return self.db.execute(schema, 'table', self.TABLE_NAME) });
+	var rows = self.db.fetch(result, ['CNT']);
 	if(parseInt(rows[0]['CNT'], 10) > 0) {
 		result = true;
 	}
@@ -38,7 +41,7 @@ base.prototype.cmdCreate = function() {
 		cols.push(String.format('PRIMARY KEY (%s)', this.primaryKey.join(', ')));
 	}
 	schema = String.format('CREATE TABLE IF NOT EXISTS %s (%s)', self.TABLE_NAME, cols.join(', '));
-	return self.db.execute(schema);
+	return self.execute(function(){ return self.db.execute(schema); }, true);
 };
 
 /**
@@ -48,7 +51,7 @@ base.prototype.cmdDrop = function() {
 	var self = this;
 	var schema = '';
 	schema = String.format('DROP TABLE IF EXISTS %s', self.TABLE_NAME);
-	return self.db.execute(schema);
+	return self.execute(function(){ return self.db.execute(schema); }, true);
 };
 
 
@@ -91,7 +94,7 @@ base.prototype.cmdSelect = function(condition, sort, count) {
 		schema += String.format('LIMIT 0,%d', count);
 	}
 	
-	return self.db.execute(schema, condVals);
+	return self.execute(function(){ return self.db.execute(schema, condVals); });
 };
 
 /**
@@ -138,11 +141,11 @@ base.prototype.cmdInsert = function(data) {
 				reps.push('?');
 			}
 			schema = String.format('INSERT INTO %s(%s) VALUES (%s)', self.TABLE_NAME, cols.join(', '), reps.join(', '));
-			return self.db.execute(schema, vals);
+			return self.execute(function(){ return self.db.execute(schema, vals); }, true);
 		};
 		
 		if(!Array.isArray(data)) {
-			ret = insert(data);
+			return insert(data);
 		} else {
 			for(var row in data) {
 				insert(data[row]);
@@ -176,7 +179,7 @@ base.prototype.cmdUpdate = function(data, condition) {
 			}
 			schema = String.format('UPDATE %s SET %s WHERE %s ', self.TABLE_NAME, cols.join(', '), condCols.join(' AND '));
 		}
-		return self.db.execute(schema, vals, condVals);
+		return self.execute(function(){ return self.db.execute(schema, vals, condVals); }, true);
 	}
 };
 
@@ -196,7 +199,30 @@ base.prototype.cmdDelete = function(condition) {
 		}
 		schema = String.format('DELETE FROM %s WHERE %s ', self.TABLE_NAME, condCols.join(' AND '));
 	}
-	return self.db.execute(schema, condVals);
+	return self.execute(function(){ return self.db.execute(schema, condVals); }, true);
+};
+
+base.prototype.execute = function(fncCmd, isCommit) {
+	var self = this;
+	if(self.autoConnect && !self.db.isOpen()) {
+		try {
+			self.db.open();
+			try {
+				if(isCommit) self.db.begin();
+				ret = fncCmd();
+				if(isCommit) self.db.commit();
+				return ret;
+			} catch(e) {
+				Ti.API.error(e);
+			} finally {
+				self.db.close();
+			}
+		} catch(e) {
+			Ti.API.error(e);
+		}
+	} else {
+		return fncCmd();
+	}
 };
 
 module.exports = base;

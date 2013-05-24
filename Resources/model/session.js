@@ -1,11 +1,12 @@
 var util = require('model/util');
 
 function session(db, cyboze) {
+	this.__super__();
 	this.db = db;
 	this.cyboze = cyboze;
 	this.listeners = {};
 };
-session.prototype = util.createObject(require('model/base'));
+module.exports = util.inherit(session, require('model/base'));
 
 session.prototype.login = function(userId, password) {
 	var self = this;
@@ -23,6 +24,3 @@ session.prototype.login = function(userId, password) {
 	});
 };
 
-
-
-module.exports = session;

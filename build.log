@@ -1,10 +1,12 @@
 Logfile initialized
 [INFO] logfile = /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build.log
-[DEBUG] /Users/akosuge/Library/Application Support/Titanium/mobilesdk/osx/3.1.0.GA/android/builder.py simulator Gyboze /Users/akosuge/android-sdk-macosx /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze jp.co.getti.dev.Gyboze 10 WVGA854 /127.0.0.1:50650
+[INFO] logfile = /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build.log
+[DEBUG] /Users/akosuge/Library/Application Support/Titanium/mobilesdk/osx/3.1.0.GA/android/builder.py emulator Gyboze /Users/akosuge/android-sdk-macosx /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze jp.co.getti.dev.Gyboze 10 WVGA854 armeabi
+[DEBUG] /Users/akosuge/Library/Application Support/Titanium/mobilesdk/osx/3.1.0.GA/android/builder.py simulator Gyboze /Users/akosuge/android-sdk-macosx /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze jp.co.getti.dev.Gyboze 10 WVGA854 /127.0.0.1:57429
+[INFO] Building Gyboze for Android ... one moment
 [INFO] Launching Android emulator...one moment
 [DEBUG] From: /Users/akosuge/android-sdk-macosx/tools/emulator
 [DEBUG] SDCard: /Users/akosuge/.titanium/android2.sdcard
-[INFO] Building Gyboze for Android ... one moment
 [DEBUG] AVD ID: 10
 [DEBUG] AVD Skin: WVGA854
 [DEBUG] AVD ABI: armeabi
@@ -14,40 +16,136 @@ Logfile initialized
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.033283 seconds on emulator to get ready
+[DEBUG] waited 0.034243 seconds on emulator to get ready
 [DEBUG] jp.co.getti.dev.Gyboze installed? False
 [INFO] Fastdev server running, deploying in Fastdev mode
 [INFO] Copying CommonJS modules...
 [INFO] Copying project resources..
+[INFO] Detected change in tiapp.xml, or assets deleted. Forcing full re-build...
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/appicon.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/appicon.png
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/default.png
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/app.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/app.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ctrl/delegate.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ctrl/delegate.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ctrl/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ctrl/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ctrl/main.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ctrl/main.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/images/icon_rss.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/images/icon_rss.png
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/images/KS_nav_ui.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/images/KS_nav_ui.png
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/images/KS_nav_views.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/images/KS_nav_views.png
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/KS_nav_ui.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/KS_nav_ui.png
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/KS_nav_views.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/KS_nav_views.png
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/lib/async.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/lib/async.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/lib/cybozelive.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/lib/cybozelive.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/lib/jkl-parsexml.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/lib/jkl-parsexml.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/lib/jsOAuth-1.3.3.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/lib/jsOAuth-1.3.3.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/lib/jsOAuth-1.3.6.min.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/lib/jsOAuth-1.3.6.min.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/lib/jsOAuth-1.3.6_for_Ti3.0.2.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/lib/jsOAuth-1.3.6_for_Ti3.0.2.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/lib/TiDomParser.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/lib/TiDomParser.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/base.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/base.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/board.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/board.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/cabinet.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/cabinet.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/base.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/base.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/board.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/board.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/boardCategory.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/boardCategory.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/cabinet.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/cabinet.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/cabinetFolder.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/cabinetFolder.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/group.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/group.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/schedule.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/schedule.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/todo.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/todo.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/dao/todoCategory.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/dao/todoCategory.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/db/db.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/db/db.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/dummy.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/dummy.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/group.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/group.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/newly.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/newly.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/schedule.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/schedule.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/service/cybozelive/adapter.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/service/cybozelive/adapter.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/service/cybozelive/cybozelive.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/service/cybozelive/cybozelive.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/session.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/session.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/todo.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/todo.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/model/util.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/model/util.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/tizen/appicon.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/tizen/appicon.png
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/common/mainTabGroup/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/common/mainTabGroup/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/common/mainTabGroup/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/common/mainTabGroup/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/common/mainTabGroup/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/common/mainTabGroup/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/common/overlayIndicator/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/common/overlayIndicator/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/common/overlayIndicator/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/common/overlayIndicator/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/base.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/base.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/boardDetailWindow/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/boardDetailWindow/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/boardDetailWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/boardDetailWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/boardDetailWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/boardDetailWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/boardListWindow/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/boardListWindow/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/boardListWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/boardListWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/boardListWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/boardListWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/cabinetListWindow/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/cabinetListWindow/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/cabinetListWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/cabinetListWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/cabinetListWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/cabinetListWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/groupWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/groupWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/groupWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/groupWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/loginWindow/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/loginWindow/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/loginWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/loginWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/loginWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/loginWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/newlyListWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/newlyListWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/newlyListWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/newlyListWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/otherWindow/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/otherWindow/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/otherWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/otherWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/otherWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/otherWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/scheduleListWindow/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/scheduleListWindow/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/scheduleListWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/scheduleListWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/scheduleListWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/scheduleListWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/template/events.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/template/events.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/template/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/template/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/template/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/template/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/todoListWindow/logics.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/todoListWindow/logics.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/todoListWindow/styles.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/todoListWindow/styles.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/handheld/todoListWindow/view.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/handheld/todoListWindow/view.js
+[TRACE] COPYING CREATED FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/ui/util.js => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/ui/util.js
 [DEBUG] LiveView not enabled
-[INFO] Tiapp.xml unchanged, skipping class generation
+[TRACE] Generating Java Classes
 [DEBUG] Processing Android resource drawables
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-land-hdpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-long-land-hdpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-land-ldpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-long-land-ldpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-port-hdpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-long-port-hdpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-port-ldpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-long-port-ldpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-hdpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-land-hdpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-ldpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-land-ldpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-mdpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-land-mdpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-hdpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-port-hdpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-ldpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-port-ldpi/default_d44e27d97b.png
+[TRACE] COPYING FILE: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-mdpi/default.png => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-port-mdpi/default_d44e27d97b.png
 [DEBUG] found special platform files dir = /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/platform/android
 [INFO] Copying platform-specific files ...
-[DEBUG] Removed duplicate string [welcome] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [newlyTabTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [groupTabTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [otherTabTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [boardTabTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [todoTabTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [scheduleTabTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [cabinetTabTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [loginWindowTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [loginWindowUserId] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [loginWindowPassword] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [loginWindowLogin] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [newlyWindowTitle] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
-[DEBUG] Removed duplicate string [newlyWindowClose] from /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/values-ja/strings.xml
+[DEBUG] app stylesheet => /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/ApplicationStylesheet.java
+[DEBUG] copying app icon: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/appicon.png
+[DEBUG] generating theme.xml
 [DEBUG] found drawable-long-land-hdpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-land-hdpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-land-hdpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-long-land-hdpi/background.png
 [DEBUG] found drawable-long-land-ldpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-land-ldpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-land-ldpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-long-land-ldpi/background.png
 [DEBUG] found drawable-long-port-hdpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-port-hdpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-port-hdpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-long-port-hdpi/background.png
 [DEBUG] found drawable-long-port-ldpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-port-ldpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-long-port-ldpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-long-port-ldpi/background.png
 [DEBUG] found drawable-notlong-land-hdpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-hdpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-hdpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-land-hdpi/background.png
 [DEBUG] found drawable-notlong-land-ldpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-ldpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-ldpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-land-ldpi/background.png
 [DEBUG] found drawable-notlong-land-mdpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-mdpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-land-mdpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-land-mdpi/background.png
 [DEBUG] found drawable-notlong-port-hdpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-hdpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-hdpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-port-hdpi/background.png
 [DEBUG] found drawable-notlong-port-ldpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-ldpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-ldpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-port-ldpi/background.png
 [DEBUG] found drawable-notlong-port-mdpi splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-mdpi/default.png
+[DEBUG] copying /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/Resources/android/images/res-notlong-port-mdpi/default.png splash screen to /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/res/drawable-notlong-port-mdpi/background.png
+[DEBUG] found splash screen at /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/assets/Resources/default.png
+[TRACE] Writing out AndroidManifest.xml
+[DEBUG] adding /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/ApplicationStylesheet.java to javac build list
+[DEBUG] adding /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/GybozeActivity.java to javac build list
+[DEBUG] adding /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/GybozeAppInfo.java to javac build list
+[DEBUG] adding /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/GybozeApplication.java to javac build list
+[DEBUG] adding /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/R.java to javac build list
+[DEBUG] Building Java Sources: "/Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/ApplicationStylesheet.java" "/Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/GybozeActivity.java" "/Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/GybozeAppInfo.java" "/Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/GybozeApplication.java" "/Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/gen/jp/co/getti/dev/Gyboze/R.java"
+[INFO] Compiling Android Resources... This could take some time
+[DEBUG] Android classes.dex built
 [DEBUG] creating unsigned apk: /Users/akosuge/Documents/Titanium_Studio_Workspace/Gyboze/build/android/bin/app-unsigned.apk
 [DEBUG] from resource zip => assets/Resources/ctrl/delegate.js
 [DEBUG] from resource zip => assets/Resources/ctrl/logics.js
@@ -139,15 +237,25 @@ Logfile initialized
 [DEBUG] from resource zip => AndroidManifest.xml
 [DEBUG] from resource zip => resources.arsc
 [DEBUG] from resource zip => res/drawable-long-land-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-long-land-hdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-long-land-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-long-land-ldpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-long-port-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-long-port-hdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-long-port-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-long-port-ldpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-land-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-hdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-land-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-ldpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-land-mdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-mdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-port-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-hdpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-port-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-ldpi/default_d44e27d97b.png
 [DEBUG] from resource zip => res/drawable-notlong-port-mdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-mdpi/default_d44e27d97b.png
 [DEBUG] from JAR /Users/akosuge/Library/Application Support/Titanium/mobilesdk/osx/3.1.0.GA/android/thirdparty.jar => org/apache/Commons-NOTICE.txt
 [DEBUG] from JAR /Users/akosuge/Library/Application Support/Titanium/mobilesdk/osx/3.1.0.GA/android/thirdparty.jar => org/apache/HttpComponents-NOTICE.txt
 [DEBUG] from JAR /Users/akosuge/Library/Application Support/Titanium/mobilesdk/osx/3.1.0.GA/android/thirdparty.jar => org/apache/mime4j-NOTICE.txt
@@ -175,10 +283,10 @@ Logfile initialized
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.038959 seconds on emulator to get ready
+[DEBUG] waited 0.048261 seconds on emulator to get ready
 [INFO] Installing application on emulator
 [INFO] Launching application ... Gyboze
 [TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=jp.co.getti.dev.Gyboze/.GybozeActivity }
 
 [INFO] Deployed Gyboze ... Application should be running.
-[INFO] Forwarding host port 50650 to device for debugging.
+[INFO] Forwarding host port 57429 to device for debugging.

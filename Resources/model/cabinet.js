@@ -1,36 +1,78 @@
 var util = require('model/util');
 
 function cabinet(db, cyboze) {
+	this.__super__();
 	this.db = db;
 	this.cyboze = cyboze;
 	this.listeners = {};
-	this.tblCabinet = new (require('model/db/dao/cabinet'))(db);
-	this.tblCabinetFolder = new (require('model/db/dao/cabinetFolder'))(db);
 };
-cabinet.prototype = util.createObject(require('model/base'));
+module.exports = util.inherit(cabinet, require('model/base'));
 
-cabinet.prototype.fetchCabinet = function(groups) {
+// === GETTER =======================
+cabinet.prototype.getCabinet = function(groupId, folderId, id) {
 	var self = this;
+	var result = [];
+	
+	var param = {};
+	if(groupId) param['groupId'] = groupId;
+	if(folderId) param['folderId'] = folderId;
+	if(id) param['id'] = id;
+	
+	result = self.db.table.cabinet.cmdSelectWithFetch(param, {'updateDate' : 'DESC'});
+	return result;
+};
 
-	self.addEventListener('updateCabinetFolder', function(param) {
-		var folders = self.getCabinetFolder(param.groupId);
-		for(var i in folders) {
-			self.fetchCabinetForGroupFolder(param.groupId, folders[i].id);
-		}
+cabinet.prototype.getCabinetFolder = function(groupId, id) {
+	var self = this;
+	var result = [];
+	
+	var param = {};
+	if(groupId) param['groupId'] = groupId;
+	if(id) param['id'] = id;
+	
+	result = self.db.table.cabinetFolder.cmdSelectWithFetch(param);
+	return result;
+};
+
+// === SYNC CYBOZE DATA =======================
+cabinet.prototype.syncCabinet = function(groups, callback) {
+	var self = this;
+	
+	// Delete DB Data
+	self.db.table.cabinetFolder.cmdDelete();
+	self.db.table.cabinet.cmdDelete();
+	
+	// Sync All Group
+	var async = require('lib/async');
+	Ti.API.debug('=== Sync cabinetFolder start ===');
+	async.mapSeries(groups, function(group, next) {
+		Ti.API.debug('--- Sync cabinetFolder start groupId:' + group.id);
+		self.syncCabinetFolderForGroup(group.id, function(result) {
+			Ti.API.debug('--- Sync cabinetFolder end groupId:' + group.id);
+			
+			var folders = self.getCabinetFolder(group.id);
+			var asyncFolder = require('lib/async');
+			Ti.API.debug('=== Sync cabinet start ===');
+			asyncFolder.mapSeries(folders, function(folder, nextFolder) {
+				Ti.API.debug('--- Sync cabinet start groupId:' + folder.groupId + " folderId:" + folder.id);
+				self.syncCabinetForGroupFolder(folder.groupId, folder.id, function(result) {
+					Ti.API.debug('--- Sync cabinet end groupId:' + folder.groupId + " folderId:" + folder.id);
+					nextFolder(null, true);
+				});
+			},
+			function(err, results) {
+				Ti.API.debug('=== Sync cabinet end ===');
+				next(null, true);
+			});
+		});
+	},
+	function(err, results) {
+		Ti.API.debug('=== Sync cabinetFolder end ===');
+		if(callback) callback();
 	});
-	
-	self.fetchCabinetFolder(groups);
 };
 
-cabinet.prototype.fetchCabinetFolder = function(groups) {
-	var self = this;
-	
-	for(var i in groups) {
-		self.fetchCabinetFolderForGroup(groups[i].id);
-	}
-};
-
-cabinet.prototype.fetchCabinetFolderForGroup = function(groupId) {
+cabinet.prototype.syncCabinetFolderForGroup = function(groupId, callback) {
 	var self = this;
 	
 	var param = {
@@ -88,19 +130,14 @@ cabinet.prototype.fetchCabinetFolderForGroup = function(groupId) {
 				author: 'System'
 			});
 			
-			// TODO トランザクションがうまいこといくなら、上のループでやってもいいのにね。
-			self.db.open();
-			self.db.begin();
-			self.tblCabinetFolder.cmdInsert(data);
-			self.db.commit();
-			self.db.close();
-			
+			self.db.table.cabinetFolder.cmdInsert(data);
 			self.fireEvent('updateCabinetFolder', { groupId: groupId });
 		}
+		if(callback) callback(result);
 	});
 };
 
-cabinet.prototype.fetchCabinetForGroupFolder = function(groupId, folderId) {
+cabinet.prototype.syncCabinetForGroupFolder = function(groupId, folderId, callback) {
 	var self = this;
 
 	var param = {
@@ -150,49 +187,11 @@ cabinet.prototype.fetchCabinetForGroupFolder = function(groupId, folderId) {
 				};
 				data.push(row);
 			}
-			// TODO 場合によっちゃループ外でやるひつようもある？
-			self.db.open();
-			self.db.begin();
-			self.tblCabinet.cmdInsert(data);
-			self.db.commit();
-			self.db.close();
-			
+			self.db.table.cabinet.cmdInsert(data);
 			self.fireEvent('updateCabinet', { groupId: groupId, folderId: folderId });
 		}
+		if(callback) callback(result);
 	});
 };
 
 
-// === GETTER =======================
-
-
-cabinet.prototype.getCabinet = function(groupId, folderId, id) {
-	var self = this;
-	var result = [];
-	
-	var param = {};
-	if(groupId) param['groupId'] = groupId;
-	if(folderId) param['folderId'] = folderId;
-	if(id) param['id'] = id;
-	
-	self.db.open();
-	result = self.tblCabinet.cmdSelectWithFetch(param, {'updateDate' : 'DESC'});
-	self.db.close();
-	return result;
-};
-
-cabinet.prototype.getCabinetFolder = function(groupId, id) {
-	var self = this;
-	var result = [];
-	
-	var param = {};
-	if(groupId) param['groupId'] = groupId;
-	if(id) param['id'] = id;
-	
-	self.db.open();
-	result = self.tblCabinetFolder.cmdSelectWithFetch(param);
-	self.db.close();
-	return result;
-};
-
-module.exports = cabinet;

@@ -1,11 +1,12 @@
 var util = require('model/util');
 
 function todo(db, cyboze) {
+	this.__super__();
 	this.db = db;
 	this.cyboze = cyboze;
 	this.listeners = {};
 };
-todo.prototype = util.createObject(require('model/base'));
+module.exports = util.inherit(todo, require('model/base'));
 
 // === GETTER =======================
 todo.prototype.getTodo = function(groupId, id) {
@@ -16,9 +17,7 @@ todo.prototype.getTodo = function(groupId, id) {
 	if(groupId) param['groupId'] = groupId;
 	if(id) param['id'] = id;
 	
-	self.db.open();
 	result = self.db.table.todo.cmdSelectWithFetch(param, {'updateDate' : 'DESC'});
-	self.db.close();
 	return result;
 };
 
@@ -30,29 +29,23 @@ todo.prototype.getTodoCategory = function(groupId, id) {
 	if(groupId) param['groupId'] = groupId;
 	if(id) param['id'] = id;
 	
-	self.db.open();
 	result = self.db.table.todoCategory.cmdSelectWithFetch(param);
-	self.db.close();
 	return result;
 };
 
 // === SYNC CYBOZE DATA =======================
-todo.prototype.fetchTodo = function(groups, callback) {
+todo.prototype.syncTodo = function(groups, callback) {
 	var self = this;
-	var results;
 	
 	// Delete DB Data
-	self.db.open();
 	self.db.table.todo.cmdDelete();
-	self.db.commit();
-	self.db.close();
 	
 	// Sync All Group
 	var async = require('lib/async');
-	Ti.API.debug('=== Sync todo start ===' + group.id);
+	Ti.API.debug('=== Sync todo start ===');
 	async.mapSeries(groups, function(group, next) {
 		Ti.API.debug('--- Sync todo start groupId:' + group.id);
-		self.fetchTodoForGroup(group.id, function(result) {
+		self.syncTodoForGroup(group.id, function(result) {
 			Ti.API.info('--- Sync todo end groupId:' + group.id);
 			next(null, true);
 		});
@@ -123,35 +116,36 @@ todo.prototype.syncTodoForGroup = function(groupId, callback) {
 				data.push(row);
 			}
 			
-			// TODO トランザクションがうまいこといくなら、上のループでやってもいいのにね。
-			self.db.open();
-			self.db.begin();
 			self.db.table.todo.cmdInsert(data);
-			self.db.commit();
-			self.db.close();
-			
 			self.fireEvent('updateTodo', { groupId: groupId });
 		}
 		if(callback) callback(result);
 	});
 };
 
-todo.prototype.fetchTodoCategory = function(groups, callback) {
+todo.prototype.syncTodoCategory = function(groups, callback) {
 	var self = this;
+	
+	// Delete DB Data
+	self.db.table.todoCategory.cmdDelete();
+	
+	// Sync All Group
 	var async = require('lib/async');
-	async.each(groups, function(group, next) { 
-		Ti.API.info('fetchTodoCategory each:' + group.id);
-		self.fetchTodoCategoryForGroup(group.id, function() {
-			Ti.API.info('fetchTodoCategory end' + group.id); next(null, true);
+	Ti.API.debug('=== Sync todoCategory start ===');
+	async.mapSeries(groups, function(group, next) {
+		Ti.API.debug('--- Sync todoCategory start groupId:' + group.id);
+		self.syncTodoCategoryForGroup(group.id, function(result) {
+			Ti.API.debug('--- Sync todoCategory end groupId:' + group.id);
+			next(null, true);
 		});
 	},
 	function(err, results) {
-		Ti.API.info('fetchTodoCategory kore end');
-		Ti.API.info(results);
+		Ti.API.debug('=== Sync todoCategory end ===');
+		if(callback) callback();
 	});
 };
 
-todo.prototype.fetchTodoCategoryForGroup = function(groupId, callback) {
+todo.prototype.syncTodoCategoryForGroup = function(groupId, callback) {
 	var self = this;
 	
 	var param = {
@@ -188,18 +182,9 @@ todo.prototype.fetchTodoCategoryForGroup = function(groupId, callback) {
 				};
 				data.push(row)
 			}
-			// TODO トランザクションがうまいこといくなら、上のループでやってもいいのにね。
-			self.db.open();
-			self.db.begin();
-			self.db.table.todoCategory.cmdDelete();
 			self.db.table.todoCategory.cmdInsert(data);
-			self.db.commit();
-			self.db.close();
-			
 			self.fireEvent('updateTodoCategory', { groupId: groupId });
 		}
 		if(callback) callback(result);
 	});
 };
-
-module.exports = todo;

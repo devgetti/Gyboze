@@ -1,11 +1,12 @@
 var util = require('model/util');
 
 function board(db, cyboze) {
+	this.__super__();
 	this.db = db;
 	this.cyboze = cyboze;
 	this.listeners = {};
 };
-board.prototype = util.createObject(require('model/base'));
+module.exports = util.inherit(board, require('model/base'));
 
 // === GETTER =======================
 board.prototype.getBoardList = function(groupId, id) {
@@ -16,9 +17,7 @@ board.prototype.getBoardList = function(groupId, id) {
 	if(groupId) param['groupId'] = groupId;
 	if(id) param['id'] = id;
 	
-	self.db.open();
 	result = self.db.table.board.cmdSelectForList(param, 10);
-	self.db.close();
 	return result;
 };
 
@@ -30,10 +29,8 @@ board.prototype.getBoardDetail = function(groupId, id) {
 	if(groupId) param['groupId'] = groupId;
 	if(id) param['id'] = id;
 	
-	self.db.open();
 	result = self.db.table.board.cmdSelectForDetail(param);
-	self.db.close();
-	
+
 	return (result.length > 0)?result[0]:null;
 };
 
@@ -45,29 +42,34 @@ board.prototype.getBoardCategory = function(groupId, id) {
 	if(groupId) param['groupId'] = groupId;
 	if(id) param['id'] = id;
 	
-	self.db.open();
 	self.self.db.table.boardCategory.cmdSelectWithFetch(param);
-	self.db.close();
 	return result;
 };
 
 // === SYNC CYBOZE DATA =======================
-board.prototype.fetchBoard = function(groups) {
+board.prototype.syncBoard = function(groups, callback) {
 	var self = this;
+	
+	// Delete DB Data
+	self.db.table.board.cmdDelete();
+	
+	// Sync All Group
 	var async = require('lib/async');
-	async.eachSeries(groups, function(group, next) { 
-		Ti.API.info('fetchBoard each:' + group.id);
-		self.fetchBoardForGroup(group.id, function() {
-			Ti.API.info('fetchBoard end'); next(null, true);
+	Ti.API.debug('=== Sync board start ===');
+	async.mapSeries(groups, function(group, next) {
+		Ti.API.debug('--- Sync board start groupId:' + group.id);
+		self.syncBoardForGroup(group.id, function(result) {
+			Ti.API.debug('--- Sync board end groupId:' + group.id);
+			next(null, true);
 		});
 	},
 	function(err, results) {
-		Ti.API.info('fetchBoard kore end');
-		Ti.API.info(results);
+		Ti.API.debug('=== Sync board end ===');
+		if(callback) callback();
 	});
 };
 
-board.prototype.fetchBoardForGroup = function(groupId) {
+board.prototype.syncBoardForGroup = function(groupId, callback) {
 	var self = this;
 
 	var param = {
@@ -116,36 +118,37 @@ board.prototype.fetchBoardForGroup = function(groupId) {
 				data.push(row);
 			}
 			
-			// TODO トランザクションがうまいこといくなら、上のループでやってもいいのにね。
-			self.db.open();
-			self.db.begin();
-			self.db.table.board.cmdDelete();
 			self.db.table.board.cmdInsert(data);
-			self.db.commit();
-			self.db.close();
-			
-			// TODO ほんとは全部のグループが取り終わったら投げたい。
+
 			self.fireEvent('updateBoard', { groupId: groupId });
 		}
+		if(callback) callback(result);	
 	});
 };
 
-board.prototype.fetchBoardCategory = function(groups) {
+board.prototype.syncBoardCategory = function(groups, callback) {
 	var self = this;
+	
+	// Delete DB Data
+	self.db.table.boardCategory.cmdDelete();
+	
+	// Sync All Group
 	var async = require('lib/async');
-	async.eachSeries(groups, function(group, next) { 
-		Ti.API.info('fetchBoardCategoryForGroup each:' + group.id);
-		self.fetchBoardCategoryForGroup(group.id, function() {
-			Ti.API.info('fetchBoardCategoryForGroup end'); next(null, true);
+	Ti.API.debug('=== Sync boardCategory start ===');
+	async.mapSeries(groups, function(group, next) {
+		Ti.API.debug('--- Sync boardCategory start groupId:' + group.id);
+		self.syncBoardCategoryForGroup(group.id, function(result) {
+			Ti.API.debug('--- Sync boardCategory end groupId:' + group.id);
+			next(null, true);
 		});
 	},
 	function(err, results) {
-		Ti.API.info('fetchBoardCategoryForGroup kore end');
-		Ti.API.info(results);
+		Ti.API.debug('=== Sync boardCategory end ===');
+		if(callback) callback();
 	});
 };
 
-board.prototype.fetchBoardCategoryForGroup = function(groupId) {
+board.prototype.syncBoardCategoryForGroup = function(groupId, callback) {
 	var self = this;
 	
 	var param = {
@@ -182,17 +185,10 @@ board.prototype.fetchBoardCategoryForGroup = function(groupId) {
 				};
 				data.push(row)
 			}
-			// TODO トランザクションがうまいこといくなら、上のループでやってもいいのにね。
-			self.db.open();
-			self.db.begin();
-			self.db.table.boardCategory.cmdDelete();
+
 			self.db.table.boardCategory.cmdInsert(data);
-			self.db.commit();
-			self.db.close();
-			
 			self.fireEvent('updateBoardCategory', { groupId: groupId });
 		}
+		if(callback) callback(result);
 	});
 };
-
-module.exports = board;

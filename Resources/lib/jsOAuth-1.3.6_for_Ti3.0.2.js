@@ -396,6 +396,7 @@ exports.OAuth = (function (global) {
                         } else if(xhr.status >= 400 && xhr.status !== 0) {
                             failure(responseObject);
                         }
+                        xhr.onreadystatechange = null;
                     }
                 };
                 

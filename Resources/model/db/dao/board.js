@@ -1,7 +1,7 @@
 var util = require('model/util');
 
-function board(db) {
-	this.db = db;
+function board(db, option) {
+	this.__super__(db, option);
 	this.TABLE_NAME = 'board';
 	this.columns = {
 		'id': 'CHAR',
@@ -16,7 +16,7 @@ function board(db) {
 	};
 	this.primaryKey = ['groupId', 'id'];
 };
-board.prototype = util.createObject(require('model/db/dao/base'));
+module.exports = util.inherit(board, require('model/db/dao/base'));
 
 /**
  * リスト取得用
@@ -50,7 +50,7 @@ board.prototype.cmdSelectForList = function(condition, count) {
 		schema += String.format('LIMIT 0,%d', count);
 	}
 	
-	return self.db.fetch(self.db.execute(schema, condVals), cols);
+	return self.db.fetch(self.execute(function(){ return self.db.execute(schema, condVals); }), cols);
 };
 
 /**
@@ -85,7 +85,5 @@ board.prototype.cmdSelectForDetail = function(condition) {
 	// LIMIT
 	schema += 'LIMIT 0,1 ';
 	
-	return self.db.fetch(self.db.execute(schema, condVals), cols);
+	return self.db.fetch(self.execute(function(){ return self.db.execute(schema, condVals); }), cols);
 };
-
-module.exports = board;

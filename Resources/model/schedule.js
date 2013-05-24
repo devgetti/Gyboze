@@ -1,11 +1,12 @@
 var util = require('model/util');
 
 function schedule(db, cyboze) {
+	this.__super__();
 	this.db = db;
 	this.cyboze = cyboze;
 	this.listeners = {};
 };
-schedule.prototype = util.createObject(require('model/base'));
+module.exports = util.inherit(schedule, require('model/base'));
 
 // === GETTER =======================
 schedule.prototype.getSchedule = function(groupId) {
@@ -15,9 +16,7 @@ schedule.prototype.getSchedule = function(groupId) {
 	var param = {};
 	if(groupId) param['groupId'] = groupId;
 	
-	self.db.open();
 	result = self.db.table.schedule.cmdSelectWithFetch(param);
-	self.db.close();
 	return result;
 };
 
@@ -28,6 +27,8 @@ schedule.prototype.getSchedule = function(groupId) {
  */
 schedule.prototype.syncSchedule = function(callback) {
 	var self = this;
+	
+	self.db.table.schedule.cmdDelete();
 	
 	var param = {
 		// オプション
@@ -93,18 +94,9 @@ schedule.prototype.syncSchedule = function(callback) {
 				};
 				data.push(row);
 			}
-			
-			// TODO トランザクションがうまいこといくなら、上のループでやってもいいのにね。
-			self.db.open();
-			self.db.begin();
-			self.db.table.schedule.cmdDelete();
 			self.db.table.schedule.cmdInsert(data);
-			self.db.commit();
-			self.db.close();
 			self.fireEvent('updateSchedule');
 		}
 		if(callback) callback(result);
 	});
 };
-
-module.exports = schedule;

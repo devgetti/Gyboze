@@ -1,7 +1,7 @@
 var util = require('model/util');
 
-function cabinet(db) {
-	this.db = db;
+function cabinet(db, option) {
+	this.__super__(db, option);
 	this.TABLE_NAME = 'cabinet';
 	this.columns = {
 		'groupId': 'CHAR',
@@ -19,6 +19,5 @@ function cabinet(db) {
 	};
 	this.primaryKey = ['groupId', 'folderId', 'id'];
 };
-cabinet.prototype = util.createObject(require('model/db/dao/base'));
 
-module.exports = cabinet;
+module.exports = util.inherit(cabinet, require('model/db/dao/base'));

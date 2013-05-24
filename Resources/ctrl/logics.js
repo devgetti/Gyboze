@@ -28,7 +28,7 @@ logics.prototype.fetchData = function() {
 	self.ctrl.indicator.show();
 	 
 	// TODO バッチ実行的な仕組みを考えなきゃならない
-	self.model.group.fetchGroup(function(result) {
+	self.model.group.syncGroup(function(result) {
 		if(result.success) {
 			// グループ取得後
 			var groups = self.model.group.getGroups();
@@ -37,14 +37,15 @@ logics.prototype.fetchData = function() {
 			var tasks = [];
 			tasks.push(function(next) { self.model.schedule.syncSchedule(function() { Ti.API.info('end1'); next(null, true); }); });
 			tasks.push(function(next) { self.model.todo.syncTodo(groups, function() { Ti.API.info('end2'); next(null, true); }); });
-			//tasks.push(function(next) { self.model.todo.fetchTodoCategory(groups, function() { Ti.API.info('end3'); next(null, true); }); });
-			//tasks.push(function(next) { self.model.board.fetchBoardCategory(groups, function() { Ti.API.info('end4'); next(null, true); }); });
-			//	tasks.push(function(next) { self.model.board.fetchBoard(groups, function() { Ti.API.info('end5'); next(null, true); }); });
-			//tasks.push(function(next) { self.model.cabinet.fetchCabinet(groups, function() { Ti.API.info('end6'); next(null, true); }); });
+			tasks.push(function(next) { self.model.todo.syncTodoCategory(groups, function() { Ti.API.info('end3'); next(null, true); }); });
+			tasks.push(function(next) { self.model.board.syncBoardCategory(groups, function() { Ti.API.info('end4'); next(null, true); }); });
+			tasks.push(function(next) { self.model.board.syncBoard(groups, function() { Ti.API.info('end5'); next(null, true); }); });
+			tasks.push(function(next) { self.model.cabinet.syncCabinet(groups, function() { Ti.API.info('end6'); next(null, true); }); });
 			
 			async.series(tasks, function(err, results) {
 				Ti.API.info('true end');
 				Ti.API.info(results);
+				self.ctrl.indicator.hide();
 			});
 			
 			//alert('全部とるまでの同期方法を考えなきゃならなん。あと、パーサを最適化しないとメモリ不足で死ぬる。')

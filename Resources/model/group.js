@@ -1,13 +1,12 @@
 var util = require('model/util');
 
 function group(db, cyboze) {
+	this.__super__();
 	this.db = db;
 	this.cyboze = cyboze;
 	this.listeners = {};
-	this.tblGroup = new (require('model/db/dao/group'))(db);
-
 };
-group.prototype = util.createObject(require('model/base'));
+module.exports = util.inherit(group, require('model/base'));
 
 // === GETTER =======================
 group.prototype.getGroups = function(id) {
@@ -17,15 +16,15 @@ group.prototype.getGroups = function(id) {
 	var param = {};
 	if(id) param['id'] = id;
 	
-	self.db.open();
-	result = self.tblGroup.cmdSelectWithFetch(param);
-	self.db.close();
+	result = self.db.table.group.cmdSelectWithFetch(param);
 	return result;
 };
 
 // === SYNC CYBOZE DATA =======================
-group.prototype.fetchGroup = function(callback) {
+group.prototype.syncGroup = function(callback) {
 	var self = this;
+	
+	self.db.table.group.cmdDelete();
 	
 	var param = param || {
 		// オプション
@@ -82,19 +81,9 @@ group.prototype.fetchGroup = function(callback) {
 				data.push(row);
 			}
 			
-			
-			// TODO トランザクションがうまいこといくなら、上のループでやってもいいのにね。
-			self.db.open();
-			self.db.begin();
-			self.db.table.group.cmdDelete();
 			self.db.table.group.cmdInsert(data);
-			self.db.commit();
-			self.db.close();
-			
 			self.fireEvent('updateGroup', {});
 		}
 		if(callback) callback(result);
 	});
 };
-
-module.exports = group;

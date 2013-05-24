@@ -1,7 +1,7 @@
 var util = require('model/util');
 
-function schedule(db) {
-	this.db = db;
+function schedule(db, option) {
+	this.__super__(db, option);
 	this.TABLE_NAME = 'schedule';
 	this.columns = {
 		'groupId': 'CHAR',
@@ -17,6 +17,5 @@ function schedule(db) {
 	};
 	this.primaryKey = ['groupId', 'id'];
 };
-schedule.prototype = util.createObject(require('model/db/dao/base'));
 
-module.exports = schedule;
+module.exports = util.inherit(schedule, require('model/db/dao/base'));
