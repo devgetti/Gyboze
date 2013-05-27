@@ -7,27 +7,25 @@ function logics(model, view, ctrl) {
 
 logics.prototype.loginCyboze = function(param) {
 	var self = this;
-	var arr = this.callbackArray;
-	arr.push(param.callback);
-	this.callbackArray = arr;
+	// var arr = this.callbackArray;
+	// arr.push(param.callback);
+	// this.callbackArray = arr;
 	self.view.loginWindow.open();
 };
 
 logics.prototype.loginLogic = function(param) {
 	var self = this;
 	self.view.loginWindow.close();
-	var arr = this.callbackArray;
-	var callback = arr.pop();
-	this.callbackArray = arr;
-	callback();
+	// var arr = this.callbackArray;
+	// var callback = arr.pop();
+	// this.callbackArray = arr;
+	// callback();
 };
 	
-// TODO 名前かえる fetch->sync
-logics.prototype.fetchData = function() {
+logics.prototype.syncData = function() {
 	var self = this;
 	self.ctrl.indicator.show();
-	 
-	// TODO バッチ実行的な仕組みを考えなきゃならない
+	
 	self.model.group.syncGroup(function(result) {
 		if(result.success) {
 			// グループ取得後

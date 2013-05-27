@@ -1,11 +1,3 @@
-exports.rewrite = function(dst) {
-	if(dst) {
-		for(var key in dst) {
-			this[key] = dst[key];
-		}
-	}
-};
-
 exports.createObject = function(type) {
 	var f = function(){};
 	f.prototype = type.prototype;
@@ -27,6 +19,15 @@ exports.inherit = function(subClass, superClass) {
     return subClass;
 };
 
+
+
+exports.rewrite = function(dst) {
+	if(dst) {
+		for(var key in dst) {
+			this[key] = dst[key];
+		}
+	}
+};
 
 /**
  * 

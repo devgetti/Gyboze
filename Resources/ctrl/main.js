@@ -83,10 +83,10 @@ Application.prototype.appStart = function() {
 	ctrlDelegate.addEventListener('procResume', function(param){ self.indicator.hide(); });
 	
 	ctrlDelegate.addEventListener('login', function(param) { logics.loginLogic(param); });
-	ctrlDelegate.addEventListener('resyncAll', function(param) { logics.fetchData(param); });
+	ctrlDelegate.addEventListener('resyncAll', function(param) { logics.syncData(param); });
 	ctrlDelegate.addEventListener('logout', function(param){});
 	ctrlDelegate.addEventListener('reloadNewly', function(param){});
-	ctrlDelegate.addEventListener('reloadEvent', function(param){});
+	ctrlDelegate.addEventListener('reloadSchedule', function(param){});
 	ctrlDelegate.addEventListener('reloadTodo', function(param){});
 	ctrlDelegate.addEventListener('reloadBoard', function(param){});
 	ctrlDelegate.addEventListener('reloadCabinet', function(param){});

@@ -1,29 +1,31 @@
 var util = require('ui/util');
+var styles = require('ui/handheld/scheduleListWindow/styles');
 
 function scheduleListWindow(model, delegate) {
-	var styles = require('ui/handheld/scheduleListWindow/styles');
-	var self = Ti.UI.createWindow(styles.win);
+	this.__super__(styles.win, model, delegate);
+	
+	var self = this;
+	var win = this.win;
+	var logics = new (require('ui/handheld/scheduleListWindow/logics'))(self, model, delegate);
 	
 	// === Component ===============
-	self.tvSchedule = Ti.UI.createTableView(styles.tvSchedule);
+	win.tvSchedule = Ti.UI.createTableView(styles.tvSchedule);
 	
 	// --- Layout ---
-	util.setViewRect(self.tvSchedule, 0, 0, '100%', '100%');
+	util.setViewRect(win.tvSchedule, 0, 0, '100%', '100%');
 	
 	// --- Add ---
-	self.add(self.tvSchedule);
+	win.add(win.tvSchedule);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/scheduleListWindow/logics'))(self, model, delegate);
-
 	// -- Events From User ---
-	self.addEventListener('open', function(e) { logics.winOpen(); });
-	self.tvSchedule.addEventListener('click', function(e) { logics.clickList(e); });
+	win.addEventListener('open', function(e) { logics.winOpen(); });
+	win.tvSchedule.addEventListener('click', function(e) { logics.clickList(e); });
 
 	// --- Events From Model ---
 	model.schedule.addEventListener('updateSchedule', function(e) { logics.updateScheduleList(e); });
 	
-	return self;
+	self.win = win;
 };
 
-module.exports = scheduleListWindow;
+module.exports = util.inherit(scheduleListWindow, require('ui/baseWindow'));

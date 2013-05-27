@@ -1,9 +1,21 @@
 This Program is a Experimental ClientApp For CybozeLive.
 
+
+
+async.js
+http://onilabs.com/apollo
+https://github.com/caolan/async
+http://d.hatena.ne.jp/sheile/20111216/1324045972
+
+# setprop service.adb.tcp.port 5678
+# kill `pgrep adbd`
+
 思想的なこと
 ・ピンポイントな機能のライブラリは使っても、MVCフレームワークは使わないようにしよう。
 ・MVCを分けるよう意識する。
 ・DBはopenしたまま落ちたりするとlockされたままになる時があったりする。利用するときだでopen、closeするようにする。
+・includeは使わない。CommonJS的になくなる？ため。requireだけでなんとかする。
+・基本テーブルやウィンドウごとやらの単位でモジュール化する。また、ベースクラスからの継承を可能にするなど、複数人＋中以上規模の開発構成を意識する。
 
 ----------------------------------
 by getti
