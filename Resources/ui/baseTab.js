@@ -32,9 +32,24 @@ baseTab.prototype.setWindow = function(window) {
 
 baseTab.prototype.openWindow = function(window) {
 	var self = this;
-	baseTab.setWindow(window);
-	self.tab.setKeepScreenOn(true);
-	self.tab.open(window);
+	if(window instanceof require('ui/baseWindow')) {
+		var win = window.getWindow();
+		win.addEventListener('open', function(e) {
+			var stack = self.windowStack;
+			stack.push(self);
+			self.windowStack = stack;
+		});
+		win.addEventListener('close', function(e) {
+			var stack = self.windowStack;
+			stack.pop();
+			self.windowStack = stack;
+		});
+		self.tab.window = win;
+		window.parent = self;
+		
+		self.tab.setKeepScreenOn(true);
+		self.tab.open(window.getWindow());
+	}
 };
 
 baseTab.prototype.closeWindow = function() {

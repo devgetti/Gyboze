@@ -39,11 +39,11 @@ baseWindow.prototype.open = function(parent) {
 	
 	var tab = getParentTab(parent);
 	if(tab) {
-		tab.openWindow(child);
+		tab.openWindow(self);
 	} else {
-		child.open();
+		self.win.open();
 	}
-	child.parent = self;
+	self.parent = parent;
 };
 
 baseWindow.prototype.close = function() {

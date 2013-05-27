@@ -60,7 +60,7 @@ logics.prototype.clickList = function(e) {
 	var self = this;
 	Ti.API.info('table view row clicked - index:' + e.index);
 	alert('index:' + e.index);
-	(new (require('ui/handheld/scheduleListWindow/view'))(self.model, self.delegate)).open(self);
+	(new (require('ui/handheld/scheduleListWindow/view'))(self.model, self.delegate)).open(self.win);
 	// var detailWindow = new (require('ui/handheld/boardDetailWindow/view'))(self.model, self.delegate);
 	// detailWindow.setBoard(e.rowData.bindData);
 	// detailWindow.open();
