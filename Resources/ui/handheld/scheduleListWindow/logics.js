@@ -53,7 +53,7 @@ logics.prototype.updateScheduleList = function(e) {
 		rowData.push(row);
 	}
 	
-	self.win.getWindow().tvSchedule.data = rowData;
+	self.win.tvSchedule.data = rowData;
 };
 
 logics.prototype.clickList = function(e) {

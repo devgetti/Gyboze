@@ -1,11 +1,15 @@
-exports.createObject = function(type) {
+exports.createObject = function(type, isInstance) {
 	var f = function(){};
-	f.prototype = type.prototype;
+	if(!isInstance) {
+		f.prototype = type.prototype;
+	} else {
+		f.prototype = type;
+	}
 	return new f();
 };
 
-exports.inherit = function(subClass, superClass) {
-    subClass.prototype = exports.createObject(superClass);
+exports.inherit = function(subClass, superClass, isInstance) {
+    subClass.prototype = exports.createObject(superClass, isInstance);
     subClass.prototype.constructor = subClass;
     subClass.prototype.__super__ = function () {
         var originalSuper = this.__super__;
