@@ -20,8 +20,9 @@ function mainTabGroup(model, delegate) {
 	self.addTab(self.otherTab);
 	
 
+
 	scheduleList = new (require('ui/handheld/scheduleListWindow/view'))(model, delegate);
-	scheduleList.open();
+	
 /*
 	boardList = new (require('ui/handheld/boardListWindow/view'))(model, delegate);
 	boardList.setTab(self);

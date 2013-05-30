@@ -53,14 +53,14 @@ logics.prototype.updateScheduleList = function(e) {
 		rowData.push(row);
 	}
 	
-	self.win.tvSchedule.data = rowData;
+	self.win.window.tvSchedule.data = rowData;
 };
 
 logics.prototype.clickList = function(e) {
 	var self = this;
 	Ti.API.info('table view row clicked - index:' + e.index);
 	alert('index:' + e.index);
-	(new (require('ui/handheld/scheduleListWindow/view'))(self.model, self.delegate)).open(self.win);
+	(new (require('ui/handheld/scheduleListWindow/view'))(self.model, self.delegate)).open({}, self.win);
 	// var detailWindow = new (require('ui/handheld/boardDetailWindow/view'))(self.model, self.delegate);
 	// detailWindow.setBoard(e.rowData.bindData);
 	// detailWindow.open();

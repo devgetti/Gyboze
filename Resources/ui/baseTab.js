@@ -116,6 +116,7 @@ function baseTab(style, model, delegate) {
 
 module.exports = baseTab;
 */
+/*
 module.exports = (function() {
 	var tab = Ti.UI.createTab();
 	var f = function(){};
@@ -169,4 +170,36 @@ module.exports = (function() {
 	
 	return baseTab;
 })();
+*/
+
+function baseTab(style, model, delegate, window) {
+	var self = this;
+	var tm = new (require('ui/tabManager'))();
+	self.tab = tm.create(style);
+	self.model = model;
+	self.delegate = delegate;
+	
+	if(window) {
+		if(window instanceof Ti.UI.Window) {
+			self.tab.setWindow(window);
+		} else if(window instanceof require('ui/baseWindow')) {
+			self.tab.setWindow(window.getTiWindow());
+		} else {
+			throw new Error('Window is Unknown Type!!');
+		}
+	}
+};
+module.exports = baseTab;
+
+baseTab.prototype.getTiTab = function() {
+	return this.tab;
+};
+
+baseTab.prototype.openWindow = function(window) {
+	return this.tab.open(window);
+};
+
+baseTab.prototype.close = function() {
+	return this.tab.close();
+};
 

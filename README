@@ -9,6 +9,12 @@ http://d.hatena.ne.jp/sheile/20111216/1324045972
 
 # setprop service.adb.tcp.port 5678
 # kill `pgrep adbd`
+-------------
+adb -e shell
+su
+mount -o remount,rw -t ext4 /dev/block/sda6 /system
+-----------
+
 
 思想的なこと
 ・ピンポイントな機能のライブラリは使っても、MVCフレームワークは使わないようにしよう。

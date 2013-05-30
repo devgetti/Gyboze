@@ -7,6 +7,8 @@ function baseWindow(style, model, delegate) {
 	self.model = model;
 	self.delegate = delegate;
 	self.windowStack = [];
+	var wm = new (require('ui/windowManager'))();
+	wm.create()
 
 };
 module.exports = util.inherit(baseWindow, Ti.UI.Window);
@@ -107,6 +109,7 @@ var baseWindow = function(style, model, delegate) {
 
 module.exports = baseWindow;
 */
+/*
 module.exports = (function() {
 	(function() {
 	    Object.prototype.proto = function(proto) {
@@ -212,3 +215,24 @@ module.exports = (function() {
 	
 	return baseWindow;
 })();
+*/
+function baseWindow(style, model, delegate) {
+	var self = this;
+	var wm = new (require('ui/windowManager'))();
+	self.window = wm.create(style);
+	self.model = model;
+	self.delegate = delegate;
+};
+module.exports = baseWindow;
+
+baseWindow.prototype.getTiWindow = function() {
+	return this.window;
+};
+
+baseWindow.prototype.open = function(params, parent) {
+	return this.window.open(params, parent);
+};
+
+baseWindow.prototype.close = function() {
+	return this.window.close();
+};
