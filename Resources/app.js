@@ -14,6 +14,8 @@ if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
 
+var wm = new (require('ui/windowManager'))();
+
 // Application
 var ctrl = new (require('ctrl/main'))();
 ctrl.appStart();

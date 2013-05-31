@@ -2,45 +2,32 @@ var util = require('ui/util');
 var styles = require('ui/common/mainTabGroup/styles');
 
 function mainTabGroup(model, delegate) {
-	var self = Ti.UI.createTabGroup();
+	this.tabGroup = Ti.UI.createTabGroup();
 
 	// === Component ===============
-	//self.scheduleTab = Ti.UI.createTab(styles.scheduleTab);
-	self.scheduleTab = new (require('ui/baseTab'))(styles.scheduleTab, model, delegate);
-	self.todoTab = Ti.UI.createTab(styles.todoTab);
-	self.boardTab = Ti.UI.createTab(styles.boardTab);
-	self.cabinetTab = Ti.UI.createTab(styles.cabinetTab);
-	self.otherTab = Ti.UI.createTab(styles.otherTab);
+	scheduleList = new (require('ui/handheld/scheduleListWindow/view'))(model, delegate);
+	todoList = new (require('ui/handheld/todoListWindow/view'))(model, delegate);
+	boardList = new (require('ui/handheld/boardListWindow/view'))(model, delegate);
+	cabinetTab = new (require('ui/handheld/cabinetListWindow/view'))(model, delegate);
+	otherTab = new (require('ui/handheld/otherWindow/view'))(model, delegate);
+	
+	this.tabGroup.scheduleTab = new (require('ui/baseTab'))(styles.scheduleTab, model, delegate, scheduleList);
+	this.tabGroup.todoTab = new (require('ui/baseTab'))(styles.todoTab, model, delegate, todoList);
+	this.tabGroup.boardTab = new (require('ui/baseTab'))(styles.boardTab, model, delegate, boardList);
+	this.tabGroup.cabinetTab = new (require('ui/baseTab'))(styles.cabinetTab, model, delegate, cabinetTab);
+	this.tabGroup.otherTab = new (require('ui/baseTab'))(styles.otherTab, model, delegate, otherTab);
 
 	// --- Add ---
-	self.addTab(self.scheduleTab);
-	self.addTab(self.todoTab);
-	self.addTab(self.boardTab);
-	self.addTab(self.cabinetTab);
-	self.addTab(self.otherTab);
-	
-
-
-	scheduleList = new (require('ui/handheld/scheduleListWindow/view'))(model, delegate);
-	
-/*
-	boardList = new (require('ui/handheld/boardListWindow/view'))(model, delegate);
-	boardList.setTab(self);
-	*/
-	//self.scheduleTab.setWindow(scheduleList);
-	/*self.todoTab.window = new (require('ui/handheld/todoListWindow/view'))(model, delegate);
-	self.boardTab.window = boardList.getWindow();
-	self.cabinetTab.window = new (require('ui/handheld/cabinetListWindow/view'))(model, delegate);
-	self.otherTab.window = new (require('ui/handheld/otherWindow/view'))(model, delegate);
-	
-	self.tagGroup = tabGroup;
-	*/
-	
-	self.test = function() {
-		alert('test');
-	};
-	
-	return self;
+	this.tabGroup.addTab(this.tabGroup.scheduleTab.getTiTab());
+	this.tabGroup.addTab(this.tabGroup.todoTab.getTiTab());
+	this.tabGroup.addTab(this.tabGroup.boardTab.getTiTab());
+	this.tabGroup.addTab(this.tabGroup.cabinetTab.getTiTab());
+	this.tabGroup.addTab(this.tabGroup.otherTab.getTiTab());
 };
 
 module.exports = mainTabGroup;
+
+mainTabGroup.prototype.open = function() {
+	return this.tabGroup.open();
+};
+

@@ -1,17 +1,44 @@
 var util = require('ui/util');
 
 function windowManager() {
-	this.windows = [];	
+	this.objects = {};	
 }
 
 module.exports = windowManager;
 
-windowManager.prototype.create = function(style, model, delegate) {
+windowManager.prototype.dump = function() {
+	for(var o in this.objects) {
+		Ti.API.info("id:" + o + " constructor:" + this.objects[o].constructor.name);
+	}
+}
+windowManager.prototype.getObject = function(objectId) {
+	return this.objects[objectId];
+};
+
+windowManager.prototype.createWindow = function(style) {
 	var w = Ti.UI.createWindow(style);
-	w.parent = null;
+	w.objectId = Math.random().toString(36).slice(-8);
+	w.parentId = null;
+	w.manager = this;
 	
 	w.getParent = function() {
-		return this.parent;
+		return this.manager.getObject(this.parentId);
+	}
+	
+	w.getParentTab = function() {
+		var manager = w.manager;
+		var tabSearch = function(target){
+			var result = null;
+			var parent = manager.getObject(target.parentId);
+			if(parent instanceof Ti.UI.Tab) {
+				result = parent;
+			} else if(parent instanceof Ti.UI.Window) {
+				result = tabSearch(parent);
+			}
+			return result;
+		};
+		
+		return tabSearch(this);
 	}
 	
 	function inheritFnc(fncName, overrideFnc) {
@@ -37,16 +64,6 @@ windowManager.prototype.create = function(style, model, delegate) {
 	}
 	*/
 	
-	function getParentTab(target) {
-		var result = null;
-		if(target instanceof Ti.UI.Tab) {
-			result = target;
-		} else if(target instanceof Ti.UI.Window) {
-			result = getParentTab(target.parent)
-		}
-		return result;
-	};
-	
 	inheritFnc('addEventListener', function(name, fnc) {
 		w.___addEventListener(name, function() {
 			try {
@@ -57,174 +74,103 @@ windowManager.prototype.create = function(style, model, delegate) {
 		});
 	});
 	
-	inheritFnc('setBackgroundColor', function(color) {
-		Ti.API.info('new bgc');
-	});
-	
 	inheritFnc('open', function(params, parent) {
 		//var parent = (params && params.parent) || null;
-		var tab = getParentTab(parent);
-		w.parent = parent;
-		if(tab) {
-			tab.open(w);
+		if(parent) {
+			var tab = w.getParentTab(parent);
+			w.parentId = parent.objectId;
+			if(tab) {
+				tab.open(w);
+			} else {
+				w.___open(params);
+			}
 		} else {
 			w.___open(params);
 		}
 	});
 	
 	w.addEventListener('open', function(e) {
-		var tab = getParentTab(w.parent);
+		var tab = w.getParentTab();
 		if(tab) {
-			tab.windowStack.push(w);
+			tab.addWindowStack(w);
 		}
 	});
 	
 	w.addEventListener('close', function(e) {
-		var tab = getParentTab(w.parent);
+		var tab = w.getParentTab();
 		if(tab) {
-			tab.windowStack.splice(windowStack.indexOf(w), 1);
+			tab.delWindowStack(w);
 		}
 	});
 	
-	this.windows.push(w);
-	return w;
+	this.objects[w.objectId] = w;
+	return this.objects[w.objectId];
 };
 
-exports.clone_obj = function(obj) {
-    var c = obj instanceof Array ? [] : {};
-    for (var i in obj) {
-        var prop = obj[i];
-
-        if (typeof prop == 'object') {
-           if (prop instanceof Array) {
-               c[i] = [];
-
-               for (var j = 0; j < prop.length; j++) {
-                   if (typeof prop[j] != 'object') {
-                       c[i].push(prop[j]);
-                   } else {
-                       c[i].push(clone_obj(prop[j]));
-                   }
-               }
-           } else {
-               c[i] = clone_obj(prop);
-           }
-        } else {
-           c[i] = prop;
-        }
-    }
-
-    return c;
-};
-
-/*
+windowManager.prototype.createTab = function(style) {
+	var tab = Ti.UI.createTab(style);
+	var windowStack = [];
+	tab.objectId = Math.random().toString(36).slice(-8);
+	tab.parentId = null;
+	tab.manager = this;
+	tab.tabGroup = null;
 	
-	require('ui/handheld/boardDetailWindow/styles').win
-	/*
-	var cl = function() {
-		var w = Ti.UI.createWindow(require('ui/handheld/boardDetailWindow/styles').win);
-		
-		function f() {
-			
-		};
-		
-		for(var p in w) {
-			if(typeof(w[p]) == 'function') {
-				f.prototype[p] = function() {
-					return w(arguments);
-				};
+	tab.getParent = function() {
+		return this.manager.getObject(this.parentId);
+	}
+	
+	tab.getWindowStack = function(){
+		return windowStack;
+	}
+	
+	tab.addWindowStack = function(win){
+		windowStack.push(win.objectId);
+	}
+	
+	tab.delWindowStack = function(win){
+		var index = windowStack.indexOf(win.objectId);
+		return windowStack.splice(index, 1);
+	}
+	
+	function inheritFnc(fncName, overrideFnc) {
+		tab['___' + fncName] = tab[fncName];
+		tab[fncName] = function() {
+			try {
+				return overrideFnc.apply(this, arguments);
+			} catch(e) {
+				Ti.API.error(e);
 			}
-		}
-		
-		f.prototype.setBackgroundColor = function() {
-			Ti.API.info('new bgc');
-			w.setBackgroundColor(arguments);
 		};
-		
-		f.prototype.open = function() {
-			Ti.API.info('new open');
-			w.open(arguments);
-		};
-		/*
-	f.prototype.addEventListener = function(eventName, callback) {
-		this.listeners = this.listeners || {};
-		this.listeners[eventName] = this.listeners[eventName] || [];
-		this.listeners[eventName].push(callback);
-		
-	};
+	}
 	
-
-	f.prototype.fireEvent = function(eventName, data) {
-		var eventListeners = this.listeners[eventName] || [];
-		for (var i = 0; i < eventListeners.length; i++) {
-			eventListeners[i].call(this, data);
-		}
-	};
-
-	};
-
-	var win = new cl();
-	
-	
-		win.addEventListener('open', function(e) {
-			win.setBackgroundColor('Blue');
+	inheritFnc('addEventListener', function(name, fnc) {
+		tab.___addEventListener(name, function() {
+			try {
+				return fnc.apply(this, arguments);
+			} catch(e) {
+				throw new Error('addEventListener Faild!!');
+			}
 		});
-		
-	var tt = Ti.UI.createTab();
-	tt.setWindow(win);
+	})
 	
-	var tg = Ti.UI.createTabGroup();
-	tg.addTab(tt);
-	tg.open();
+	inheritFnc('open', function(win, options) {
+		if(win instanceof Ti.UI.Window) {
+			tab.setKeepScreenOn(true);
+			return tab.___open(window, options);
+		} else {
+			throw new Error('window is not Ti.UI.Window!!');
+		}
+	});
 	
-	win.setBackgroundColor('Red');
+	inheritFnc('setWindow', function(win) {
+		if(win instanceof Ti.UI.Window) {
+			win.parentId = tab.objectId;
+			return tab.___setWindow(win);
+		} else {
+			throw new Error('window is not Ti.UI.Window!!');
+		}
+	});
 
-	
-	
-	
-	A.prototype = w;
-	
-	var B = function(){
-		Ti.API.info('A constructor');
-	};
-	B.prototype = new A();
-	B.prototype.open = function() {
-		Ti.API.info('B.open constructor');
-		A.prototype.open();
-	};
-//	var BN = new B();
-//	BN.open();
-
-	var tg = Ti.UI.createTabGroup();
-	function C() {
-		Ti.API.info('C constructor');
-	};
-	C.prototype = tg;
-	
-	var D = function(){
-		Ti.API.info('D constructor');
-	};
-	D.prototype = new C();
-
-	var t = Ti.UI.createTab(require('ui/common/mainTabGroup/styles').scheduleTab);
-	function E() {
-		Ti.API.info('E constructor');
-	};
-	E.prototype = t;
-	
-	var F = function(){
-		Ti.API.info('F constructor');
-	};
-	F.prototype = new E();
-
-
-	var tab = new F();
-	tab.setWindow(aa);
-
-	var tabGroup = new D();
-	tabGroup.addTab(tab);
-	tabGroup.open();
-
-*/
-
-
+	this.objects[tab.objectId] = tab;
+	return this.objects[tab.objectId];
+};

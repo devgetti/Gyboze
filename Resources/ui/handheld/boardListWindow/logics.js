@@ -128,7 +128,7 @@ logics.prototype.clickList = function(e) {
 	var self = this;
 	var detailWindow = new (require('ui/handheld/boardDetailWindow/view'))(self.model, self.delegate);
 	detailWindow.update(e.row.data.groupId, e.row.data.id);
-	detailWindow.open(self.win.tab);
+	detailWindow.open({}, self.win);
 };
 
 module.exports = logics;

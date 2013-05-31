@@ -28,7 +28,7 @@ logics.prototype.updateScheduleList = function(e) {
 		row.title = Ti.UI.createLabel(styles.lblTitle);
 		row.desc = Ti.UI.createLabel(styles.lblDesc);
 		row.authorName = Ti.UI.createLabel(styles.lblAuthorName);
-		row.updateDate = Ti.UI.createLabel(styles.lblUpdateDate)
+		row.updateDate = Ti.UI.createLabel(styles.lblUpdateDate);
 
 		// レイアウト
 		//util.setViewRect(row.img, 10, 5, 50, 50);
@@ -53,14 +53,15 @@ logics.prototype.updateScheduleList = function(e) {
 		rowData.push(row);
 	}
 	
-	self.win.window.tvSchedule.data = rowData;
+	self.win.tvSchedule.data = rowData;
 };
 
 logics.prototype.clickList = function(e) {
 	var self = this;
 	Ti.API.info('table view row clicked - index:' + e.index);
 	alert('index:' + e.index);
-	(new (require('ui/handheld/scheduleListWindow/view'))(self.model, self.delegate)).open({}, self.win);
+	var tes = (new (require('ui/handheld/scheduleListWindow/view'))(self.model, self.delegate));
+	tes.open({}, self.win);
 	// var detailWindow = new (require('ui/handheld/boardDetailWindow/view'))(self.model, self.delegate);
 	// detailWindow.setBoard(e.rowData.bindData);
 	// detailWindow.open();

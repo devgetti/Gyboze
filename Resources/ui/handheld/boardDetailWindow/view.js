@@ -1,8 +1,10 @@
 var util = require('ui/util');
+var styles = require('ui/handheld/boardDetailWindow/styles');
 
 function boardDetailWindow(model, delegate) {
-	var styles = require('ui/handheld/boardDetailWindow/styles');
-	var win = Ti.UI.createWindow(styles.win);
+	this.__super__(styles.win, model, delegate);
+	
+	var win = this.window;
 	
 	// === Component ===============
 	win.tvBoard = Ti.UI.createTableView(styles.tvBoard);
@@ -61,7 +63,6 @@ function boardDetailWindow(model, delegate) {
 	// --- Add Component ---
 	win.add(win.tvBoard);
 	
-	
 	// === Logics ====================
 	var logics = new (require('ui/handheld/boardDetailWindow/logics'))(win, model, delegate);
 
@@ -73,12 +74,7 @@ function boardDetailWindow(model, delegate) {
 
 	// --- Events From Model ---
 	
-	//return win;
-	this.win = win;
-	this.model = model;
-	this.delegate = delegate;
+	
 };
-boardDetailWindow.prototype = util.createObject(require('ui/handheld/base'));
+module.exports = util.inherit(boardDetailWindow, require('ui/baseWindow'));
 
-
-module.exports = boardDetailWindow;

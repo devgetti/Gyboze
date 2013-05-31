@@ -1,36 +1,36 @@
 var util = require('ui/util');
+var styles = require('ui/handheld/otherWindow/styles');
 
-function otherWindow(model, delegate) {
-	var styles = require('ui/handheld/otherWindow/styles');
-	var self = Ti.UI.createWindow(styles.win);
+function otherWidnow(model, delegate) {
+	this.__super__(styles.win, model, delegate);
+	
+	var win = this.window;
 	
 	// === Component ===============
-	self.lblUserId = Ti.UI.createLabel(styles.lblUserId);
-	self.txtUserId = Ti.UI.createTextField(styles.txtUserId);
-	self.btnResync = Ti.UI.createButton(styles.btnResync);
-	self.btnLogout = Ti.UI.createButton(styles.btnLogout);
+	win.lblUserId = Ti.UI.createLabel(styles.lblUserId);
+	win.txtUserId = Ti.UI.createTextField(styles.txtUserId);
+	win.btnResync = Ti.UI.createButton(styles.btnResync);
+	win.btnLogout = Ti.UI.createButton(styles.btnLogout);
 	
 	// --- Layout ---
-	util.setViewRect(self.lblUserId, '10%', '30%', '20%', '7%');
-	util.setViewRect(self.txtUserId, '40%', '30%', '60%', '7%');
-	util.setViewRect(self.btnResync, '10%', '50%', '80%', '10%');
-	util.setViewRect(self.btnLogout, '10%', '60%', '80%', '10%');
+	util.setViewRect(win.lblUserId, '10%', '30%', '20%', '7%');
+	util.setViewRect(win.txtUserId, '40%', '30%', '60%', '7%');
+	util.setViewRect(win.btnResync, '10%', '50%', '80%', '10%');
+	util.setViewRect(win.btnLogout, '10%', '60%', '80%', '10%');
 	
 	// --- Add ---
-	self.add(self.lblUserId);
-	self.add(self.txtUserId);
-	self.add(self.btnResync);
-	self.add(self.btnLogout);
+	win.add(win.lblUserId);
+	win.add(win.txtUserId);
+	win.add(win.btnResync);
+	win.add(win.btnLogout);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/otherWindow/logics'))(self, model, delegate);
+	var logics = new (require('ui/handheld/otherWindow/logics'))(win, model, delegate);
 
 	// -- Events From User ---
-	self.btnResync.addEventListener('click', function(e) { logics.btnResyncClick(e); })
+	win.btnResync.addEventListener('click', function(e) { logics.btnResyncClick(e); })
 
 	// --- Events From Model ---
 	
-	return self;
 };
-
-module.exports = otherWindow;
+module.exports = util.inherit(otherWidnow, require('ui/baseWindow'));

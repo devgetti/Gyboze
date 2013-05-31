@@ -17,6 +17,7 @@ function overlayIndicator(model) {
 	});
 	this.win = self;
 };
+module.exports = overlayIndicator;
 
 overlayIndicator.prototype.show = function() {
 	this.win.open();
@@ -26,4 +27,3 @@ overlayIndicator.prototype.hide = function() {
 	this.win.close();
 }
 
-module.exports = overlayIndicator;

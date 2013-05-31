@@ -1,29 +1,30 @@
 var util = require('ui/util');
+var styles = require('ui/handheld/todoListWindow/styles');
 
 function todoListWindow(model, delegate) {
-	var styles = require('ui/handheld/todoListWindow/styles');
-	var self = Ti.UI.createWindow(styles.win);
+	this.__super__(styles.win, model, delegate);
+	
+	var win = this.window;
 	
 	// === Component ===============
-	self.tvTodo = Ti.UI.createTableView(styles.tvTodo);
+	win.tvTodo = Ti.UI.createTableView(styles.tvTodo);
 	
 	// --- Layout ---
-	util.setViewRect(self.tvTodo, 0, 0, '100%', '100%');
+	util.setViewRect(win.tvTodo, 0, 0, '100%', '100%');
 	
 	// --- Add ---
-	self.add(self.tvTodo);
+	win.add(win.tvTodo);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/todoListWindow/logics'))(self, model, delegate);
+	var logics = new (require('ui/handheld/todoListWindow/logics'))(win, model, delegate);
 
 	// -- Events From User ---
-	self.addEventListener('open', function(e) { logics.winOpen(); });
-	self.tvTodo.addEventListener('click', function(e) { logics.clickList(e); });
+	win.addEventListener('open', function(e) { logics.winOpen(); });
+	win.tvTodo.addEventListener('click', function(e) { logics.clickList(e); });
 
 	// --- Events From Model ---
-	//model.todo.addEventListener('updateGroupInfo', function(result) { logics.updateGroupInfo(result); });	
+	model.cabinet.addEventListener('updateTodo', function(e) { logics.updateTodoList(e); });
 	
-	return self;
 };
+module.exports = util.inherit(todoListWindow, require('ui/baseWindow'));
 
-module.exports = todoListWindow;

@@ -69,19 +69,13 @@ Application.prototype.appStart = function() {
 	
 	// === View ============================================
 	var ctrlDelegate = new (require('ctrl/delegate'))();
-	/*
+	
 	var view = {
 		loginWindow: new (require('ui/handheld/loginWindow/view'))(model, ctrlDelegate),
 		//newlyWindow: new (require('ui/handheld/newlyListWindow/view'))(model, ctrlDelegate),
 		tabGroup: new (require('ui/common/mainTabGroup/view'))(model, ctrlDelegate)
 	};
-	*/
-	scheduleList = new (require('ui/handheld/scheduleListWindow/view'))(model, ctrlDelegate);
-	scheduleTab = new (require('ui/baseTab'))(require('ui/common/mainTabGroup/styles').scheduleTab, model, ctrlDelegate, scheduleList);
-	var tg = Ti.UI.createTabGroup();
-	tg.addTab(scheduleTab.getTiTab());
-	tg.open();
-/*	
+
 	// === Logics ============================================
 	var logics = new (require('ctrl/logics'))(model, view, self);
 	
@@ -110,11 +104,11 @@ Application.prototype.appStart = function() {
 	self.cyboze.addEventListener('AuthError', function(data) { alert('しばらく待ってアクセスしてね。'); });
 	self.cyboze.addEventListener('ServerError', function(data) { alert('しばらく待ってアクセスしてね。'); });
 	self.cyboze.addEventListener('UnexceptedError', function(data) { alert('管理者に連絡するとかしてね。'); });
-	
+
 	// === Logic ============================================
 	// Open TabGroup
 	view.tabGroup.open();
-*/
+
 };
 
 Application.prototype.appEnd = function() {
