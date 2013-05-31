@@ -42,19 +42,6 @@ Application.prototype.appStart = function() {
 		self.db.close();
 	};
 	
-	{
-		var version = Ti.App.getVersion();
-		var current = Ti.App.Properties.getString('System.Version', 0);
-		if (current <= 0) {
-			// 初回起動時
-			self.db.createDB();
-		}
-		if (current < version) {
-			// バージョンアップ時
-		}
-		Ti.App.Properties.setString('System.Version', version);	// Version の値を CV としてしまう（次回に備える）
-	}
-	
 	// === Model ============================================
 	var model = {
 		session: new (require('model/session'))(self.db, self.cyboze),
@@ -78,6 +65,7 @@ Application.prototype.appStart = function() {
 
 	// === Logics ============================================
 	var logics = new (require('ctrl/logics'))(model, view, self);
+	logics.init();
 	
 	// === Command ============================================
 	ctrlDelegate.addEventListener('procPause', function(param){ self.indicator.show(); });
@@ -100,7 +88,7 @@ Application.prototype.appStart = function() {
 	model.group.addEventListener('updateGroup', function(param){});
 
 	// === Error Handling ============================================
-	self.cyboze.addEventListener('Unauthorized', function(data) { logics.loginCyboze(data); });
+	self.cyboze.addEventListener('Unauthorized', function(data) { logics.login(data); });
 	self.cyboze.addEventListener('AuthError', function(data) { alert('しばらく待ってアクセスしてね。'); });
 	self.cyboze.addEventListener('ServerError', function(data) { alert('しばらく待ってアクセスしてね。'); });
 	self.cyboze.addEventListener('UnexceptedError', function(data) { alert('管理者に連絡するとかしてね。'); });

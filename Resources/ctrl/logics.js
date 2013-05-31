@@ -5,21 +5,34 @@ function logics(model, view, ctrl) {
 	this.callbackArray = [];
 };
 
-logics.prototype.loginCyboze = function(param) {
+logics.prototype.init = function() {
 	var self = this;
-	// var arr = this.callbackArray;
-	// arr.push(param.callback);
-	// this.callbackArray = arr;
-	self.view.loginWindow.open();
+	var version = Ti.App.getVersion();
+	var current = Ti.App.Properties.getString('System.Version', 0);
+	if (current <= 0) {
+		// 初回起動時
+		ctrl.db.createDB();
+		
+		// ログイン
+		//view.loginWindow.open();
+		
+		// データ同期
+		//self.syncData();
+	}
+	if (current < version) {
+		// バージョンアップ時
+	}
+	Ti.App.Properties.setString('System.Version', version);	// Version の値を CV としてしまう（次回に備える）
 };
 
-logics.prototype.loginLogic = function(param) {
+logics.prototype.login = function(param) {
 	var self = this;
-	self.view.loginWindow.close();
-	// var arr = this.callbackArray;
-	// var callback = arr.pop();
-	// this.callbackArray = arr;
-	// callback();
+	
+	self.view.loginWindow.open(param.callback);
+	
+	
+//	self.view.tabGroup.open();
+//	self.view.loginWindow.close();
 };
 	
 logics.prototype.syncData = function() {

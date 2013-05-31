@@ -45,6 +45,7 @@ base.Cyboze.prototype.xauthorize = function(userId, passwd, callback) {
 			Ti.API.debug("Token Key:" + tokenKey + " Token Secret:" + tokenSecret);
 			
 			self.oauthClient.setAccessToken(tokenKey, tokenSecret);
+			self.authorized = true;
 			
 			callback({
 				success: true,
@@ -54,11 +55,11 @@ base.Cyboze.prototype.xauthorize = function(userId, passwd, callback) {
 				accessTokenSecret: tokenSecret,
 				response: data
 			});
-			self.authorized = true;
 			
 		}, function(data) {
 			var code = data.source.status;
 			Ti.API.debug("ResponseCode:" + code + "ResponseText:" + data.source.responseText);
+			self.authorized = false;
 			callback({
 				success: false,
 				error: true,
@@ -79,9 +80,10 @@ base.Cyboze.prototype.select = function(url, param, method, callback) {
 	var self = this;
 	
 	if(!self.authorized) {
+		var vargs = arguments;
 		self.fireEvent('Unauthorized', { 
 			callback: function() {
-				 self.select(url, param, method, callback);
+				return self.select.apply(self, vargs);
 			}
 		});
 		return;

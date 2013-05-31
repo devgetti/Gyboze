@@ -8,7 +8,7 @@ function session(db, cyboze) {
 };
 module.exports = util.inherit(session, require('model/base'));
 
-session.prototype.login = function(userId, password) {
+session.prototype.login = function(userId, password, callback) {
 	var self = this;
 	
 	// Validate
@@ -19,8 +19,9 @@ session.prototype.login = function(userId, password) {
 		if(data.success) {
 			Ti.App.Properties.setString('CybozeAccessToken', data.accessTokenKey);
 			Ti.App.Properties.setString('CybozeAccessSecret', data.accessTokenSecret);
+			self.fireEvent('login', { data: data});
 		}
-		self.fireEvent('login', { data: data});
+		if(callback) callback(data);
 	});
 };
 

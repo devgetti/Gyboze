@@ -34,8 +34,13 @@ function loginWindow(model, delegate) {
 	win.btnLogin.addEventListener('click', function(result) { logics.btnLoginClick(); });
 
 	// --- Events From Model ---
-	model.session.addEventListener('login', function(result) { logics.login(result); });
+	//model.session.addEventListener('login', function(result) { logics.login(result); });
 	
 };
 module.exports = util.inherit(loginWindow, require('ui/baseWindow'));
 
+loginWindow.prototype.open = function(callback) {
+	this.window.callback = callback;
+	return this.window.open();
+
+};
