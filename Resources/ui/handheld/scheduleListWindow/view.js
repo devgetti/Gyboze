@@ -8,6 +8,17 @@ function scheduleListWindow(model, delegate) {
 	
 	// === Component ===============
 	win.tvSchedule = Ti.UI.createTableView(styles.tvSchedule);
+	win.tvSchedule.search = function(){
+		var search = Titanium.UI.createSearchBar({
+			barColor:'#385292',
+			showCancel:false,
+			hintText:'search'
+		});
+		search.addEventListener('change', function(e) { e.value; });
+		search.addEventListener('return', function(e) { search.blur(); });
+		search.addEventListener('cancel', function(e) { search.blur(); });
+		return search;
+	}();
 	
 	// --- Layout ---
 	util.setViewRect(win.tvSchedule, 0, 0, '100%', '100%');

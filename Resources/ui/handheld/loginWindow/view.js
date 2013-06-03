@@ -36,6 +36,7 @@ function loginWindow(model, delegate) {
 	// --- Events From Model ---
 	//model.session.addEventListener('login', function(result) { logics.login(result); });
 	
+	win.txtUserId.text = 'a-kosuge@netwrk.co.jp';
 };
 module.exports = util.inherit(loginWindow, require('ui/baseWindow'));
 

@@ -1,4 +1,5 @@
 var util = require('ui/util');
+var styles = require('ui/handheld/loginWindow/styles');
 
 function logics(win, model, delegate) {
 	this.win = win;
@@ -55,27 +56,28 @@ logics.prototype.updateBoardList = function(param) {
 		
 		// コンポーネント
 		//row.img = Ti.UI.createView(styles.viewImg);
-		row.title = Ti.UI.createLabel(styles.lblTitle);
+		row.name = Ti.UI.createLabel(styles.lblTitle);
 		row.summary = Ti.UI.createLabel(styles.lblSummary);
 		row.authorName = Ti.UI.createLabel(styles.lblAuthorName);
 		row.updateDate = Ti.UI.createLabel(styles.lblUpdateDate)
 
 		// レイアウト
 		//util.setViewRect(row.img, 10, 5, 50, 50);
-		util.setViewRect(row.title, 70, 5, '100%', 30);
+		util.setViewRect(row.name, 70, 5, '100%', 30);
 		util.setViewRect(row.summary, 70, 35, '100%', 20);
 		util.setViewRect(row.authorName, 70, 57, '100%', 20);
 		util.setViewRect(row.updateDate, 70, 79, '100%', 20);
 		
 		//row.add(row.img);
-		row.add(row.title);
+		row.add(row.name);
 		row.add(row.summary);
 		row.add(row.authorName);
 		row.add(row.updateDate);
 		
 		// データ設定
 		row.data = data[i];
-		row.title.text = data[i].title;
+		row.title = data[i].title;
+		row.name.text = data[i].title;
 		row.summary.text = data[i].body;
 		row.authorName.text = data[i].author;
 		row.updateDate.text = data[i].createDate;
@@ -126,9 +128,9 @@ logics.prototype.tvBoardTouched = function(e) {
 
 logics.prototype.clickList = function(e) {
 	var self = this;
-	var detailWindow = new (require('ui/handheld/boardDetailWindow/view'))(self.model, self.delegate);
-	detailWindow.update(e.row.data.groupId, e.row.data.id);
-	detailWindow.open({}, self.win);
+//	var detailWindow = new (require('ui/handheld/boardDetailWindow/view'))(self.model, self.delegate);
+//	detailWindow.update(e.row.data.groupId, e.row.data.id);
+//	detailWindow.open({}, self.win);
 };
 
 module.exports = logics;

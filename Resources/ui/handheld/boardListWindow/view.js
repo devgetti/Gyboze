@@ -9,6 +9,17 @@ function boardListWindow(model, delegate) {
 	// === Component ===============
 	//self.svBoard = Ti.UI.createScrollView(styles.svBoard);
 	win.tvBoard = Ti.UI.createTableView(styles.tvBoard);
+	win.tvBoard.search = function(){
+		var search = Titanium.UI.createSearchBar({
+			barColor:'#385292',
+			showCancel:false,
+			hintText:'search'
+		});
+		search.addEventListener('change', function(e) { e.value; });
+		search.addEventListener('return', function(e) { search.blur(); });
+		search.addEventListener('cancel', function(e) { search.blur(); });
+		return search;
+	}();
 	
 	// --- Layout ---
 	//util.setViewRect(self.svBoard, 0, 0, '100%', '100%');

@@ -10,7 +10,7 @@ module.exports = {
 	},
 	tvrCabinet: {
 		backgroundSelectedColor: '#fff',
-		height: 100,
+		height: '100',
 		className: 'datarow',
 		clickName: 'row'
 	},

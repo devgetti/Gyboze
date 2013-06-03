@@ -19,7 +19,8 @@ baseWindow.prototype.open = function(params, parent) {
 		} else if(parent instanceof require('ui/baseTab')) {
 			return this.window.open(params, parent.getTiTab());
 		} else {
-			throw new Error('Parent is Unknown Type!!');
+			return this.window.open(params, parent);
+			//throw new Error('Parent is Unknown Type!!');
 		}
 	} else {
 		return this.window.open(params);

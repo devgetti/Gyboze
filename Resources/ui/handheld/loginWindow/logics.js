@@ -1,4 +1,5 @@
 var util = require('ui/util');
+var styles = require('ui/handheld/loginWindow/styles');
 
 function logics(win, model, delegate) {
 	this.win = win;
@@ -13,11 +14,11 @@ logics.prototype.btnLoginClick = function(param) {
 	// Validate
 	
 	// Login
-	self.delegate.fireEvent('procPause', {});
+	//self.delegate.fireEvent('procPause', {});
 	self.model.session.login(self.win.txtUserId.value, self.win.txtPassword.value, function(result) {
-		self.delegate.fireEvent('procResume', {});
+		//self.delegate.fireEvent('procResume', {});
 		if(result.success) {
-			self.close();
+			self.win.close();
 			if(self.win.callback) {
 				self.win.callback();
 			}

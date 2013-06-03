@@ -97,6 +97,21 @@ Application.prototype.appStart = function() {
 	// Open TabGroup
 	view.tabGroup.open();
 
+	if(!Ti.App.Properties.hasProperty('System.LastSync')) {
+		var alertDialog = Titanium.UI.createAlertDialog({
+			title: 'データ同期',
+			message: 'CybozuLiveデータの同期を行いますが。',
+			buttonNames: ['OK','きゃんせる'],
+			cancel: 1
+		});
+		alertDialog.addEventListener('click',function(event){
+			if(event.cancel){
+				return;
+			}
+			logics.syncData();
+		});
+		alertDialog.show();
+	}
 };
 
 Application.prototype.appEnd = function() {

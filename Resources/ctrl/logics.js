@@ -13,11 +13,8 @@ logics.prototype.init = function() {
 		// 初回起動時
 		ctrl.db.createDB();
 		
-		// ログイン
-		//view.loginWindow.open();
-		
 		// データ同期
-		//self.syncData();
+		self.syncData();
 	}
 	if (current < version) {
 		// バージョンアップ時
@@ -56,6 +53,7 @@ logics.prototype.syncData = function() {
 			async.series(tasks, function(err, results) {
 				Ti.API.info('true end');
 				Ti.API.info(results);
+				Ti.App.Properties.setString('System.LastSync', new Date());
 				self.ctrl.indicator.hide();
 			});
 			

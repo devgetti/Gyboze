@@ -1,4 +1,5 @@
 var util = require('ui/util');
+var styles = require('ui/handheld/loginWindow/styles');
 
 function logics(win, model, delegate) {
 	this.win = win;

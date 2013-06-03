@@ -1,4 +1,5 @@
 var util = require('ui/util');
+var styles = require('ui/handheld/loginWindow/styles');
 
 function logics(win, model, delegate) {
 	this.win = win;
@@ -25,27 +26,28 @@ logics.prototype.updateScheduleList = function(e) {
 		
 		// コンポーネント
 		//row.img = Ti.UI.createView(styles.viewImg);
-		row.title = Ti.UI.createLabel(styles.lblTitle);
+		row.name = Ti.UI.createLabel(styles.lblTitle);
 		row.desc = Ti.UI.createLabel(styles.lblDesc);
 		row.authorName = Ti.UI.createLabel(styles.lblAuthorName);
 		row.updateDate = Ti.UI.createLabel(styles.lblUpdateDate);
 
 		// レイアウト
 		//util.setViewRect(row.img, 10, 5, 50, 50);
-		util.setViewRect(row.title, 70, 5, '100%', 30);
+		util.setViewRect(row.name, 70, 5, '100%', 30);
 		util.setViewRect(row.desc, 70, 35, '100%', 20);
 		util.setViewRect(row.authorName, 70, 57, '100%', 20);
 		util.setViewRect(row.updateDate, 70, 79, '100%', 20);
 		
 		//row.add(row.img);
-		row.add(row.title);
+		row.add(row.name);
 		row.add(row.desc);
 		row.add(row.authorName);
 		row.add(row.updateDate);
 		
 		// データ設定
 		row.bindData = data[i];
-		row.title.text = data[i].title;
+		row.title = data[i].title;
+		row.name.text = data[i].title;
 		row.desc.text = data[i].desc;
 		row.authorName.text = data[i].author;
 		row.updateDate.text = data[i].updateDate
