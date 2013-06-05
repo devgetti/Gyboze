@@ -4,7 +4,7 @@ var styles = require('ui/handheld/cabinetListWindow/styles');
 function cabinetListWindow(model, delegate) {
 	this.__super__(styles.win, model, delegate);
 	
-	var win = this.window;
+	var win = this.win;
 	
 	// === Component ===============
 	win.tvCabinet = Ti.UI.createTableView(styles.tvCabinet);

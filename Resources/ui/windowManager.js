@@ -17,6 +17,7 @@ windowManager.prototype.getObject = function(objectId) {
 
 windowManager.prototype.createWindow = function(style) {
 	var w = Ti.UI.createWindow(style);
+	w.type = 'TiUIWindow';	// For iOS
 	w.objectId = Math.random().toString(36).slice(-8);
 	w.parentId = null;
 	w.manager = this;
@@ -30,10 +31,12 @@ windowManager.prototype.createWindow = function(style) {
 		var tabSearch = function(target){
 			var result = null;
 			var parent = manager.getObject(target.parentId);
-			if(parent instanceof Ti.UI.Tab) {
-				result = parent;
-			} else if(parent instanceof Ti.UI.Window) {
-				result = tabSearch(parent);
+			if(parent && parent.type) {
+				if(parent.type == 'TiUITab') { // instanceof Ti.UI.Tab
+					result = parent;
+				} else if(parent.type == 'TiUIWindow') { // instanceof Ti.UI.Window
+					result = tabSearch(parent);
+				}
 			}
 			return result;
 		};
@@ -110,6 +113,7 @@ windowManager.prototype.createWindow = function(style) {
 windowManager.prototype.createTab = function(style) {
 	var tab = Ti.UI.createTab(style);
 	var windowStack = [];
+	tab.type = 'TiUITab';	// For iOS
 	tab.objectId = Math.random().toString(36).slice(-8);
 	tab.parentId = null;
 	tab.manager = this;
@@ -154,20 +158,24 @@ windowManager.prototype.createTab = function(style) {
 	})
 	
 	inheritFnc('open', function(win, options) {
-		if(win instanceof Ti.UI.Window) {
-			tab.setKeepScreenOn(true);
-			return tab.___open(window, options);
-		} else {
-			throw new Error('window is not Ti.UI.Window!!');
+		if(win && win.type) {
+			if(win.type == 'TiUIWindow') { // instanceof Ti.UI.Window
+				tab.setKeepScreenOn(true);
+				return tab.___open(win, options);
+			} else {
+				throw new Error('window is not Ti.UI.Window!!');
+			}
 		}
 	});
 	
 	inheritFnc('setWindow', function(win) {
-		if(win instanceof Ti.UI.Window) {
-			win.parentId = tab.objectId;
-			return tab.___setWindow(win);
-		} else {
-			throw new Error('window is not Ti.UI.Window!!');
+		if(win && win.type) {
+			if(win.type == 'TiUIWindow') { // instanceof Ti.UI.Window
+				win.parentId = tab.objectId;
+				return tab.___setWindow(win);
+			} else {
+				throw new Error('window is not Ti.UI.Window!!');
+			}
 		}
 	});
 

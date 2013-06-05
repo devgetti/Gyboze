@@ -1,16 +1,16 @@
 var util = require('ui/util');
 
-function baseTab(style, model, delegate, window) {
+function baseTab(style, model, delegate, win) {
 	var self = this;
-	self.tab = wm.createTab(style);
+	self.tab = wm.createTab();
 	self.model = model;
 	self.delegate = delegate;
 	
-	if(window) {
-		if(window instanceof Ti.UI.Window) {
-			self.tab.setWindow(window);
-		} else if(window instanceof require('ui/baseWindow')) {
-			self.tab.setWindow(window.getTiWindow());
+	if(win) {
+		if(win instanceof require('ui/baseWindow')) {
+			self.tab.window = win.getTiWindow();
+		} else if(win.type == "TiUIWindow") { // instanceof Ti.UI.Window
+			self.tab.window = win;
 		} else {
 			throw new Error('Window is Unknown Type!!');
 		}
@@ -22,13 +22,15 @@ baseTab.prototype.getTiTab = function() {
 	return this.tab;
 };
 
-baseTab.prototype.openWindow = function(window) {
-	if(window instanceof Ti.UI.Window) {
-		return this.tab.open(window);
-	} else if(window instanceof require('ui/baseWindow')) {
-		return this.tab.open(window.getTiWindow());
-	} else {
-		throw new Error('Window is Unknown Type!!');
+baseTab.prototype.openWindow = function(win) {
+	if(win) {
+		if(win instanceof require('ui/baseWindow')) {
+			return this.tab.open(win.getTiWindow());
+		} else if(win.type == "TiUIWindow") { // instanceof Ti.UI.Window
+			return this.tab.open(win);
+		} else {
+			throw new Error('Window is Unknown Type!!');
+		}
 	}
 };
 

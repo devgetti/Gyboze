@@ -4,7 +4,7 @@ var styles = require('ui/handheld/otherWindow/styles');
 function otherWidnow(model, delegate) {
 	this.__super__(styles.win, model, delegate);
 	
-	var win = this.window;
+	var win = this.win;
 	
 	// === Component ===============
 	win.btnResync = Ti.UI.createButton(styles.btnResync);

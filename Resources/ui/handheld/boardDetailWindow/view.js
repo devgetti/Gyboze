@@ -4,7 +4,7 @@ var styles = require('ui/handheld/boardDetailWindow/styles');
 function boardDetailWindow(model, delegate) {
 	this.__super__(styles.win, model, delegate);
 	
-	var win = this.window;
+	var win = this.win;
 	
 	// === Component ===============
 	win.tvBoard = Ti.UI.createTableView(styles.tvBoard);

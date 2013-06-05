@@ -4,7 +4,7 @@ var styles = require('ui/handheld/boardListWindow/styles');
 function boardListWindow(model, delegate) {
 	this.__super__(styles.win, model, delegate);
 	
-	var win = this.window;
+	var win = this.win;
 	
 	// === Component ===============
 	//self.svBoard = Ti.UI.createScrollView(styles.svBoard);

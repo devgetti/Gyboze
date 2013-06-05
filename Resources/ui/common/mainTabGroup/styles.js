@@ -4,7 +4,7 @@ module.exports = {
 		icon: '/images/KS_nav_ui.png'
 	},
 	scheduleTab: {
-		title: L('scheduleTabTitle'),
+		title: '',//L('scheduleTabTitle'),
 		icon: '/images/KS_nav_ui.png'
 	},
 	todoTab: {

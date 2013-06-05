@@ -105,17 +105,33 @@ base.prototype.cmdSelect = function(condition, sort, count) {
 base.prototype.cmdSelectWithFetch = function(condition, order, count) {
 	var self = this;
 	var resultSet = null;
-	try{
-		resultSet = self.cmdSelect(condition, order, count);
-		return self.db.fetch(resultSet, function() {
-			var result = [];
-			for(var col in self.columns) {
-				result.push(col);
-			}
-			return result;
-		}());
-	} finally {
-		if(resultSet) resultSet.close();
+	
+	var fetch = function() {
+		try{
+			resultSet = self.cmdSelect(condition, order, count);
+			return self.db.fetch(resultSet, function() {
+				var result = [];
+				for(var col in self.columns) {
+					result.push(col);
+				}
+				return result;
+			}());
+		} finally {
+			if(resultSet) resultSet.close();
+		}
+	};
+	
+	if(self.autoConnect && !self.db.isOpen()) {
+		try {
+			self.db.open();
+			return fetch();
+		} catch(e) {
+			Ti.API.error(e);
+		} finally {
+			self.db.close();
+		}
+	} else {
+		return fetch();
 	}
 };
 

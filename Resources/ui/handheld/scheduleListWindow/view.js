@@ -4,7 +4,7 @@ var styles = require('ui/handheld/scheduleListWindow/styles');
 function scheduleListWindow(model, delegate) {
 	this.__super__(styles.win, model, delegate);
 	
-	var win = this.window;
+	var win = this.win;
 	
 	// === Component ===============
 	win.tvSchedule = Ti.UI.createTableView(styles.tvSchedule);

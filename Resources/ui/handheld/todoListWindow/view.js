@@ -4,7 +4,7 @@ var styles = require('ui/handheld/todoListWindow/styles');
 function todoListWindow(model, delegate) {
 	this.__super__(styles.win, model, delegate);
 	
-	var win = this.window;
+	var win = this.win;
 	
 	// === Component ===============
 	win.tvTodo = Ti.UI.createTableView(styles.tvTodo);

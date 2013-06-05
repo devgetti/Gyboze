@@ -105,7 +105,7 @@ Application.prototype.appStart = function() {
 			cancel: 1
 		});
 		alertDialog.addEventListener('click',function(event){
-			if(event.cancel){
+			if(event.index != 0){
 				return;
 			}
 			logics.syncData();

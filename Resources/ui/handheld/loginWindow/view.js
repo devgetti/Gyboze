@@ -4,7 +4,7 @@ var styles = require('ui/handheld/loginWindow/styles');
 function loginWindow(model, delegate) {
 	this.__super__(styles.win, model, delegate);
 	
-	var win = this.window;
+	var win = this.win;
 	
 	// === Component ===============
 	win.lblUserId = Ti.UI.createLabel(styles.lblUserId);
@@ -41,7 +41,7 @@ function loginWindow(model, delegate) {
 module.exports = util.inherit(loginWindow, require('ui/baseWindow'));
 
 loginWindow.prototype.open = function(callback) {
-	this.window.callback = callback;
-	return this.window.open();
+	this.win.callback = callback;
+	return this.win.open();
 
 };
