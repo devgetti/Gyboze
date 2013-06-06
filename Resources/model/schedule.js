@@ -16,7 +16,7 @@ schedule.prototype.getSchedule = function(groupId) {
 	var param = {};
 	if(groupId) param['groupId'] = groupId;
 	
-	result = self.db.table.schedule.cmdSelectWithFetch(param);
+	result = self.db.table.schedule.cmdSelect(param);
 	return result;
 };
 

@@ -18,7 +18,7 @@ cabinet.prototype.getCabinet = function(groupId, folderId, id) {
 	if(folderId) param['folderId'] = folderId;
 	if(id) param['id'] = id;
 	
-	result = self.db.table.cabinet.cmdSelectWithFetch(param, {'updateDate' : 'DESC'});
+	result = self.db.table.cabinet.cmdSelect(param, {'updateDate' : 'DESC'});
 	return result;
 };
 
@@ -30,7 +30,7 @@ cabinet.prototype.getCabinetFolder = function(groupId, id) {
 	if(groupId) param['groupId'] = groupId;
 	if(id) param['id'] = id;
 	
-	result = self.db.table.cabinetFolder.cmdSelectWithFetch(param);
+	result = self.db.table.cabinetFolder.cmdSelect(param);
 	return result;
 };
 

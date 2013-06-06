@@ -1,7 +1,6 @@
 function db(dbName) {
 	this.dbName = dbName;
 	this.db = null;
-	this.table = { };
 };
 
 db.prototype.open = function() {
@@ -48,20 +47,6 @@ db.prototype.execute = function() {
 	}
 	Ti.API.debug(cmd, dstArgs.join(','));
 	return this.db.execute(cmd, dstArgs);
-};
-
-db.prototype.fetch = function(resultSet, columns) {
-	var self = this;
-	var results = [];
-	while(resultSet.isValidRow()){
-		var rowObj = {};
-		for(var i in columns) {
-			rowObj[columns[i]] = resultSet.fieldByName(columns[i]);
-		}
-		results.push(rowObj);
-		resultSet.next();
-	}
-	return results;
 };
 
 module.exports = db;

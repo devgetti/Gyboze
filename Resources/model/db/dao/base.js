@@ -10,7 +10,8 @@ function base(db, options) {
 	this.columns = {};
 	this.primaryKey = [];
 	if (!options) { options = {}; }
-	this.autoConnect = options.autoConnect || false;
+	this.autoConnect = options.autoConnect || true;
+	this.autoTran = options.autoTran || true;
 };
 
 base.prototype.isExists = function() {
@@ -18,9 +19,8 @@ base.prototype.isExists = function() {
 	var result = false;
 	var schema = '';
 	schema = 'SELECT COUNT(*) CNT FROM sqlite_master WHERE type= ? and name= ? ';
-	var result = self.execute(function(){ return self.db.execute(schema, 'table', self.TABLE_NAME) });
-	var rows = self.db.fetch(result, ['CNT']);
-	if(parseInt(rows[0]['CNT'], 10) > 0) {
+	var result = self.selectWithFetch(schema, ['table', self.TABLE_NAME], 'CNT');
+	if(parseInt(result[0]['CNT'], 10) > 0) {
 		result = true;
 	}
 	return result;
@@ -41,7 +41,7 @@ base.prototype.cmdCreate = function() {
 		cols.push(String.format('PRIMARY KEY (%s)', this.primaryKey.join(', ')));
 	}
 	schema = String.format('CREATE TABLE IF NOT EXISTS %s (%s)', self.TABLE_NAME, cols.join(', '));
-	return self.execute(function(){ return self.db.execute(schema); }, true);
+	return self.execute(schema);
 };
 
 /**
@@ -51,10 +51,8 @@ base.prototype.cmdDrop = function() {
 	var self = this;
 	var schema = '';
 	schema = String.format('DROP TABLE IF EXISTS %s', self.TABLE_NAME);
-	return self.execute(function(){ return self.db.execute(schema); }, true);
+	return self.execute(schema);
 };
-
-
 
 /**
  * 
@@ -66,6 +64,13 @@ base.prototype.cmdSelect = function(condition, sort, count) {
 	var self = this;
 
 	var condVals = [];
+	var colNames = function() {
+		var result = [];
+		for(var col in self.columns) {
+			result.push(col);
+		}
+		return result;
+	}();
 
 	// SELECT
 	var schema = String.format('SELECT * FROM %s ', self.TABLE_NAME);
@@ -94,50 +99,12 @@ base.prototype.cmdSelect = function(condition, sort, count) {
 		schema += String.format('LIMIT 0,%d', count);
 	}
 	
-	return self.execute(function(){ return self.db.execute(schema, condVals); });
+	return self.selectWithFetch(schema, condVals, colNames);
 };
 
 /**
  * 
- * @param {Object} condition
- * @param {Object} order
- */
-base.prototype.cmdSelectWithFetch = function(condition, order, count) {
-	var self = this;
-	var resultSet = null;
-	
-	var fetch = function() {
-		try{
-			resultSet = self.cmdSelect(condition, order, count);
-			return self.db.fetch(resultSet, function() {
-				var result = [];
-				for(var col in self.columns) {
-					result.push(col);
-				}
-				return result;
-			}());
-		} finally {
-			if(resultSet) resultSet.close();
-		}
-	};
-	
-	if(self.autoConnect && !self.db.isOpen()) {
-		try {
-			self.db.open();
-			return fetch();
-		} catch(e) {
-			Ti.API.error(e);
-		} finally {
-			self.db.close();
-		}
-	} else {
-		return fetch();
-	}
-};
-
-/**
- * 
- * @param {Object} data
+ * @param {Object} data InsertData Support "{ colA: valA, colB: valB...}" or "[{ colA: valA, colB: valB...},{ colA: valA, colB: valB...}]"
  */
 base.prototype.cmdInsert = function(data) {
 	var self = this;
@@ -157,7 +124,7 @@ base.prototype.cmdInsert = function(data) {
 				reps.push('?');
 			}
 			schema = String.format('INSERT INTO %s(%s) VALUES (%s)', self.TABLE_NAME, cols.join(', '), reps.join(', '));
-			return self.execute(function(){ return self.db.execute(schema, vals); }, true);
+			return self.execute(schema, vals);
 		};
 		
 		if(!Array.isArray(data)) {
@@ -170,6 +137,10 @@ base.prototype.cmdInsert = function(data) {
 	}
 };
 
+/**
+ * 
+ * @param {Object} or {Array} data InsertData Support "{ colA: valA, colB: valB...}" or "[{ colA: valA, colB: valB...},{ colA: valA, colB: valB...}]"
+ */
 base.prototype.cmdUpdate = function(data, condition) {
 	var self = this;
 	if(!data) {
@@ -195,7 +166,8 @@ base.prototype.cmdUpdate = function(data, condition) {
 			}
 			schema = String.format('UPDATE %s SET %s WHERE %s ', self.TABLE_NAME, cols.join(', '), condCols.join(' AND '));
 		}
-		return self.execute(function(){ return self.db.execute(schema, vals, condVals); }, true);
+
+		return self.execute(schema, vals, condVals);
 	}
 };
 
@@ -215,30 +187,82 @@ base.prototype.cmdDelete = function(condition) {
 		}
 		schema = String.format('DELETE FROM %s WHERE %s ', self.TABLE_NAME, condCols.join(' AND '));
 	}
-	return self.execute(function(){ return self.db.execute(schema, condVals); }, true);
+
+	return self.execute(schema, condVals);
 };
 
-base.prototype.execute = function(fncCmd, isCommit) {
+base.prototype.execute = function(cmd, vrgs) {
 	var self = this;
+	var ret = null;
 	if(self.autoConnect && !self.db.isOpen()) {
+		self.db.open();
 		try {
-			self.db.open();
-			try {
-				if(isCommit) self.db.begin();
-				ret = fncCmd();
-				if(isCommit) self.db.commit();
-				return ret;
-			} catch(e) {
-				Ti.API.error(e);
-			} finally {
-				self.db.close();
-			}
+			if(self.autoTran) self.db.begin();
+			ret = self.db.execute.apply(this, arguments);
+			if(self.autoTran) self.db.commit();
 		} catch(e) {
-			Ti.API.error(e);
+			if(self.autoTran) self.db.rollback();
+			throw e;
+		} finally {
+			self.db.close();
 		}
 	} else {
-		return fncCmd();
+		try {
+			if(self.autoTran) self.db.begin();
+			ret = self.db.execute.apply(this, arguments);
+			if(self.autoTran) self.db.commit();
+		} catch(e) {
+			if(self.autoTran) self.db.rollback();
+			throw e;
+		}
 	}
+	return ret;
+};
+
+base.prototype.fetch = function(resultSet, fetchColNames) {
+	var self = this;
+	var results = [];
+	while(resultSet.isValidRow()){
+		var rowObj = {};
+		for(var i in fetchColNames) {
+			rowObj[fetchColNames[i]] = resultSet.fieldByName(fetchColNames[i]);
+		}
+		results.push(rowObj);
+		resultSet.next();
+	}
+	return results;
+};
+
+/**
+ * 
+ * @param {Object} condition
+ * @param {Object} order
+ */
+base.prototype.selectWithFetch = function(schema, condVals, fetchColNames) {
+	var self = this;
+	var resultSet = null;
+	
+	if(self.autoConnect && !self.db.isOpen()) {
+		self.db.open();
+		try {
+			resultSet = self.execute(schema, condVals);
+			try {
+				ret = self.fetch(resultSet, fetchColNames);
+			} finally {
+				resultSet.close();
+			}
+		} finally {
+			self.db.close();
+		}
+	} else {
+		resultSet = self.execute(schema, condVals);
+		try {
+			ret = self.fetch(resultSet, fetchColNames);
+		} finally {
+			resultSet.close();
+		}
+	}
+	return ret;
 };
 
 module.exports = base;

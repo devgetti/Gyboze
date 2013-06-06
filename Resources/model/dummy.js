@@ -49,7 +49,7 @@ dummy.prototype.testSQLite = function(param) {
 	}
 	rows.close();
 	
-	var rowsFetch = boad.cmdSelectWithFetch({id: '1'});
+	var rowsFetch = boad.cmdSelect({id: '1'});
 	Ti.API.info(JSON.stringify(rowsFetch[0]));
 		
 	self.db.begin();

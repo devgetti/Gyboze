@@ -17,7 +17,7 @@ todo.prototype.getTodo = function(groupId, id) {
 	if(groupId) param['groupId'] = groupId;
 	if(id) param['id'] = id;
 	
-	result = self.db.table.todo.cmdSelectWithFetch(param, {'updateDate' : 'DESC'});
+	result = self.db.table.todo.cmdSelect(param, {'updateDate' : 'DESC'});
 	return result;
 };
 
@@ -29,7 +29,7 @@ todo.prototype.getTodoCategory = function(groupId, id) {
 	if(groupId) param['groupId'] = groupId;
 	if(id) param['id'] = id;
 	
-	result = self.db.table.todoCategory.cmdSelectWithFetch(param);
+	result = self.db.table.todoCategory.cmdSelect(param);
 	return result;
 };
 

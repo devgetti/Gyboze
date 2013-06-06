@@ -16,7 +16,7 @@ group.prototype.getGroups = function(id) {
 	var param = {};
 	if(id) param['id'] = id;
 	
-	result = self.db.table.group.cmdSelectWithFetch(param);
+	result = self.db.table.group.cmdSelect(param);
 	return result;
 };
 

@@ -50,7 +50,7 @@ board.prototype.cmdSelectForList = function(condition, count) {
 		schema += String.format('LIMIT 0,%d', count);
 	}
 	
-	return self.db.fetch(self.execute(function(){ return self.db.execute(schema, condVals); }), cols);
+	return self.selectWithFetch(schema, condVals, cols);
 };
 
 /**
@@ -85,5 +85,5 @@ board.prototype.cmdSelectForDetail = function(condition) {
 	// LIMIT
 	schema += 'LIMIT 0,1 ';
 	
-	return self.db.fetch(self.execute(function(){ return self.db.execute(schema, condVals); }), cols);
+	return self.selectWithFetch(schema, condVals, cols);
 };
