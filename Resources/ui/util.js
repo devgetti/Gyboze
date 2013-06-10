@@ -23,6 +23,13 @@ exports.inherit = function(subClass, superClass, isInstance) {
     return subClass;
 };
 
+exports.expandFnc = function(targetClass, expandClass) {
+	for(var member in expandClass) {
+		if(typeof(expandClass[member]) == 'function') {
+			targetClass.prototype[member] = expandClass[member];
+		}
+	}
+};
 
 exports.setViewSize = function(view, w, h) {
 	view.width = w;

@@ -1,9 +1,10 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/otherWindow/styles');
+var logics = require('ui/handheld/otherWindow/logics');
 
-function otherWidnow(model, delegate) {
-	this.__super__(styles.win, model, delegate);
-	
+function otherWidnow(model, delegate, parent) {
+	this.__super__(styles.win, model, delegate, parent);
+	var self = this;
 	var win = this.win;
 	
 	// === Component ===============
@@ -16,12 +17,11 @@ function otherWidnow(model, delegate) {
 	win.add(win.btnResync);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/otherWindow/logics'))(win, model, delegate);
-
 	// -- Events From User ---
-	win.btnResync.addEventListener('click', function(e) { logics.btnResyncClick(e); })
+	win.btnResync.addEventListener('click', function(e) { self.btnResyncClick(e); })
 
 	// --- Events From Model ---
 	
 };
 module.exports = util.inherit(otherWidnow, require('ui/baseWindow'));
+util.expandFnc(otherWidnow, logics);

@@ -1,9 +1,10 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/loginWindow/styles');
+var logics = require('ui/handheld/loginWindow/logics');
 
-function loginWindow(model, delegate) {
-	this.__super__(styles.win, model, delegate);
-	
+function loginWindow(model, delegate, parent) {
+	this.__super__(styles.win, model, delegate, parent);
+	var self = this;
 	var win = this.win;
 	
 	// === Component ===============
@@ -28,10 +29,8 @@ function loginWindow(model, delegate) {
 	win.add(win.btnLogin);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/loginWindow/logics'))(win, model, delegate);
-
 	// -- Events From User ---
-	win.btnLogin.addEventListener('click', function(result) { logics.btnLoginClick(); });
+	win.btnLogin.addEventListener('click', function(result) { self.btnLoginClick(); });
 
 	// --- Events From Model ---
 	//model.session.addEventListener('login', function(result) { logics.login(result); });
@@ -39,6 +38,7 @@ function loginWindow(model, delegate) {
 	win.txtUserId.text = 'a-kosuge@netwrk.co.jp';
 };
 module.exports = util.inherit(loginWindow, require('ui/baseWindow'));
+util.expandFnc(loginWindow, logics);
 
 loginWindow.prototype.open = function(callback) {
 	this.win.callback = callback;

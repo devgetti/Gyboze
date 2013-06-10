@@ -1,14 +1,7 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/loginWindow/styles');
 
-function logics(win, model, delegate) {
-	this.win = win;
-	this.model = model;
-	this.delegate = delegate;
-};
-module.exports = logics;
-
-logics.prototype.btnLoginClick = function(param) {
+exports.btnLoginClick = function(param) {
 	var self = this;
 	
 	// Validate

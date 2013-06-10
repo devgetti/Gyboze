@@ -1,22 +1,13 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/loginWindow/styles');
 
-function logics(win, model, delegate) {
-	this.win = win;
-	this.model = model;
-	this.delegate = delegate;
-	this.offset = 0;
-	this.bottomOfScreenOffset = ((100*20)-Ti.Platform.displayCaps.platformHeight);;
-	this.lastRowOffset =this.bottomOfScreenOffset-100;
-};
-
-logics.prototype.winOpen = function(e) {
+exports.winOpen = function(e) {
 	var self = this;
 	self.updateBoardList(self.model.board.getBoardList());
 	self.delegate.fireEvent('openBoard');
 };
 
-logics.prototype.updateBoardList = function(param) {
+exports.updateBoardList = function(param) {
 	var self = this;
 
 	var data = self.model.board.getBoardList();
@@ -89,7 +80,7 @@ logics.prototype.updateBoardList = function(param) {
 	if(rowData.length > 0) self.win.tvBoard.scrollToIndex(1);
 };
 
-logics.prototype.svBoardScroll = function(e) {
+exports.svBoardScroll = function(e) {
 	var self = this;
 	if (e.y != null) {
 		self.offset = e.y;
@@ -98,7 +89,7 @@ logics.prototype.svBoardScroll = function(e) {
 	}
 };
 
-logics.prototype.tvBoardTouched = function(e) {
+exports.tvBoardTouched = function(e) {
 	var self = this;
 	var alertDialog = Titanium.UI.createAlertDialog({
 		title: 'System Message',
@@ -126,11 +117,9 @@ logics.prototype.tvBoardTouched = function(e) {
 	}
 };
 
-logics.prototype.clickList = function(e) {
+exports.clickList = function(e) {
 	var self = this;
 //	var detailWindow = new (require('ui/handheld/boardDetailWindow/view'))(self.model, self.delegate);
 //	detailWindow.update(e.row.data.groupId, e.row.data.id);
 //	detailWindow.open({}, self.win);
 };
-
-module.exports = logics;

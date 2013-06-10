@@ -1,9 +1,10 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/cabinetListWindow/styles');
+var logics = require('ui/handheld/cabinetListWindow/logics');
 
-function cabinetListWindow(model, delegate) {
-	this.__super__(styles.win, model, delegate);
-	
+function cabinetListWindow(model, delegate, parent) {
+	this.__super__(styles.win, model, delegate, parent);
+	var self = this;
 	var win = this.win;
 	
 	// === Component ===============
@@ -27,15 +28,13 @@ function cabinetListWindow(model, delegate) {
 	win.add(win.tvCabinet);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/cabinetListWindow/logics'))(win, model, delegate);
-
 	// -- Events From User ---
-	win.addEventListener('open', function(e) { logics.winOpen(); });
-	win.tvCabinet.addEventListener('click', function(e) { logics.listClick(e); });
+	win.addEventListener('open', function(e) { self.winOpen(); });
+	win.tvCabinet.addEventListener('click', function(e) { self.listClick(e); });
 
 	// --- Events From Model ---
-	model.cabinet.addEventListener('updateCabinet', function(e) { logics.updateCabinetList(e); });
+	model.cabinet.addEventListener('updateCabinet', function(e) { self.updateCabinetList(e); });
 	
 };
 module.exports = util.inherit(cabinetListWindow, require('ui/baseWindow'));
-
+util.expandFnc(cabinetListWindow, logics);

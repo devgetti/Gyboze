@@ -1,18 +1,13 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/loginWindow/styles');
 
-function logics(win, model, delegate) {
-	this.win = win;
-	this.model = model;
-	this.delegate = delegate;
-}
-
-logics.prototype.winOpen = function(e) {
+exports.winOpen = function(e) {
 	var self = this;
-	self.updateScheduleList();
+	
+	self.updateScheduleList(e);
 };
 
-logics.prototype.updateScheduleList = function(e) {
+exports.updateScheduleList = function(e) {
 	var self = this;
 	
 	var data = self.model.schedule.getSchedule();
@@ -58,15 +53,14 @@ logics.prototype.updateScheduleList = function(e) {
 	self.win.tvSchedule.data = rowData;
 };
 
-logics.prototype.clickList = function(e) {
+exports.clickList = function(e) {
 	var self = this;
 	Ti.API.info('table view row clicked - index:' + e.index);
 	alert('index:' + e.index);
-	var tes = (new (require('ui/handheld/scheduleListWindow/view'))(self.model, self.delegate));
-	tes.open({}, self.win);
+	var tes = (new (require('ui/handheld/scheduleListWindow/view'))(self.model, self.delegate, self));
+	tes.open({}, self);
 	// var detailWindow = new (require('ui/handheld/boardDetailWindow/view'))(self.model, self.delegate);
 	// detailWindow.setBoard(e.rowData.bindData);
 	// detailWindow.open();
 };
 
-module.exports = logics;

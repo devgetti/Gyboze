@@ -1,25 +1,19 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/cabinetListWindow/styles');
 
-function logics(win, model, delegate) {
-	this.win = win;
-	this.model = model;
-	this.delegate = delegate;
-}
-
-logics.prototype.winOpen = function(e) {
+exports.winOpen = function(e) {
 	var self = this;
 	self.updateCabinetList(self.model.cabinet.getCabinet());
 	self.delegate.fireEvent('openBoard');
 };
 
-logics.prototype.listClick = function(e) {
+exports.listClick = function(e) {
 	var self = this;
 	Ti.API.info('table view row clicked - index:' + e.index);
 	alert('index:' + e.index);
 };
 
-logics.prototype.updateCabinetList = function(e) {
+exports.updateCabinetList = function(e) {
 	var self = this;
 
 	var rowData = [];
@@ -69,5 +63,3 @@ logics.prototype.updateCabinetList = function(e) {
 	
 	self.win.tvCabinet.data = rowData;
 };
-
-module.exports = logics;

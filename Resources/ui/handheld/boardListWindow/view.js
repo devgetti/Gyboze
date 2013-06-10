@@ -1,9 +1,10 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/boardListWindow/styles');
+var logics = require('ui/handheld/boardListWindow/logics');
 
-function boardListWindow(model, delegate) {
-	this.__super__(styles.win, model, delegate);
-	
+function boardListWindow(model, delegate, parent) {
+	this.__super__(styles.win, model, delegate, parent);
+	var self = this;
 	var win = this.win;
 	
 	// === Component ===============
@@ -30,17 +31,18 @@ function boardListWindow(model, delegate) {
 	win.add(win.tvBoard);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/boardListWindow/logics'))(win, model, delegate);
-
 	// -- Events From User ---
-	win.addEventListener('open', function(e) { logics.winOpen(); });
-	win.tvBoard.addEventListener('scroll', function(e) { logics.svBoardScroll(e); });
-	win.tvBoard.addEventListener('touchend', function(e) { Ti.API.info(e.y); logics.tvBoardTouched(e); });
-	win.tvBoard.addEventListener('click', function(e) { logics.clickList(e); });
+	win.addEventListener('open', function(e) { self.winOpen(); });
+	win.tvBoard.addEventListener('scroll', function(e) { self.svBoardScroll(e); });
+	win.tvBoard.addEventListener('touchend', function(e) { Ti.API.info(e.y); self.tvBoardTouched(e); });
+	win.tvBoard.addEventListener('click', function(e) { self.clickList(e); });
 
 	// --- Events From Model ---
-	model.board.addEventListener('updateBoard', function(e) { logics.updateBoardList(e); });
+	model.board.addEventListener('updateBoard', function(e) { self.updateBoardList(e); });
 	
+	this.offset = 0;
+	this.bottomOfScreenOffset = ((100*20)-Ti.Platform.displayCaps.platformHeight);;
+	this.lastRowOffset =this.bottomOfScreenOffset-100;
 };
 module.exports = util.inherit(boardListWindow, require('ui/baseWindow'));
-
+util.expandFnc(boardListWindow, logics);

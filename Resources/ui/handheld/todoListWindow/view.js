@@ -1,9 +1,10 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/todoListWindow/styles');
+var logics = require('ui/handheld/todoListWindow/logics');
 
-function todoListWindow(model, delegate) {
-	this.__super__(styles.win, model, delegate);
-	
+function todoListWindow(model, delegate, parent) {
+	this.__super__(styles.win, model, delegate, parent);
+	var self = this;
 	var win = this.win;
 	
 	// === Component ===============
@@ -27,15 +28,13 @@ function todoListWindow(model, delegate) {
 	win.add(win.tvTodo);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/todoListWindow/logics'))(win, model, delegate);
-
 	// -- Events From User ---
-	win.addEventListener('open', function(e) { logics.winOpen(); });
-	win.tvTodo.addEventListener('click', function(e) { logics.clickList(e); });
+	win.addEventListener('open', function(e) { self.winOpen(); });
+	win.tvTodo.addEventListener('click', function(e) { self.clickList(e); });
 
 	// --- Events From Model ---
-	model.cabinet.addEventListener('updateTodo', function(e) { logics.updateTodoList(e); });
+	model.cabinet.addEventListener('updateTodo', function(e) { self.updateTodoList(e); });
 	
 };
 module.exports = util.inherit(todoListWindow, require('ui/baseWindow'));
-
+util.expandFnc(todoListWindow, logics);

@@ -1,9 +1,10 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/boardDetailWindow/styles');
+var logics = require('ui/handheld/boardDetailWindow/logics');
 
-function boardDetailWindow(model, delegate) {
-	this.__super__(styles.win, model, delegate);
-	
+function boardDetailWindow(model, delegate, parent) {
+	this.__super__(styles.win, model, delegate, parent);
+	var self = this;
 	var win = this.win;
 	
 	// === Component ===============
@@ -64,17 +65,15 @@ function boardDetailWindow(model, delegate) {
 	win.add(win.tvBoard);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/boardDetailWindow/logics'))(win, model, delegate);
-
 	// -- Methods ---
-	this.update = function(groupId, boardId) { logics.updateBoardDetail(groupId, boardId); };
+	this.update = function(groupId, boardId) { self.updateBoardDetail(groupId, boardId); };
 
 	// -- Events From User ---
-	win.addEventListener('open', function(e) { logics.winOpen(e); });
+	win.addEventListener('open', function(e) { self.winOpen(e); });
 
 	// --- Events From Model ---
 	
 	
 };
 module.exports = util.inherit(boardDetailWindow, require('ui/baseWindow'));
-
+util.expandFnc(boardDetailWindow, logics);

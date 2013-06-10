@@ -1,9 +1,10 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/scheduleListWindow/styles');
+var logics = require('ui/handheld/scheduleListWindow/logics');
 
-function scheduleListWindow(model, delegate) {
-	this.__super__(styles.win, model, delegate);
-	
+function scheduleListWindow(model, delegate, parent) {
+	this.__super__(styles.win, model, delegate, parent);
+	var self = this;
 	var win = this.win;
 	
 	// === Component ===============
@@ -27,16 +28,14 @@ function scheduleListWindow(model, delegate) {
 	win.add(win.tvSchedule);
 	
 	// === Logics ====================
-	var logics = new (require('ui/handheld/scheduleListWindow/logics'))(win, model, delegate);
-	
 	// -- Events From User ---
-	win.addEventListener('open', function(e) { logics.winOpen(); });
-	win.tvSchedule.addEventListener('click', function(e) { logics.clickList(e); });
+	win.addEventListener('open', function(e) { self.winOpen(e); });
+	win.addEventListener('updateSchedule', function(e) { self.updateScheduleList(e); });
+	win.tvSchedule.addEventListener('click', function(e) { self.clickList(e); });
 
 	// --- Events From Model ---
-	model.schedule.addEventListener('updateSchedule', function(e) { logics.updateScheduleList(e); });
+	model.schedule.addEventListener('updateSchedule', function(e) { self.updateScheduleList(e); });
 	
 };
 module.exports = util.inherit(scheduleListWindow, require('ui/baseWindow'));
-
-
+util.expandFnc(scheduleListWindow, logics);

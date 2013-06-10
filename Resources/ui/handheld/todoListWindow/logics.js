@@ -1,18 +1,12 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/loginWindow/styles');
 
-function logics(win, model, delegate) {
-	this.win = win;
-	this.model = model;
-	this.delegate = delegate;
-}
-
-logics.prototype.winOpen = function(e) {
+exports.winOpen = function(e) {
 	var self = this;
 	self.updateTodoList(self.model.todo.getTodo());
 };
 
-logics.prototype.clickList = function(e) {
+exports.clickList = function(e) {
 	var self = this;
 	Ti.API.info('table view row clicked - index:' + e.index);
 	alert('index:' + e.index);
@@ -22,11 +16,11 @@ logics.prototype.clickList = function(e) {
 	// detailWindow.open();
 };
 
-logics.prototype.updateGroupInfo = function(result) {
+exports.updateGroupInfo = function(result) {
 
 };
 
-logics.prototype.updateTodoList = function(data) {
+exports.updateTodoList = function(data) {
 	var self = this;
 	var rowData = [];
 		
@@ -70,4 +64,3 @@ logics.prototype.updateTodoList = function(data) {
 	self.win.tvTodo.data = rowData;
 };
 
-module.exports = logics;

@@ -1,19 +1,13 @@
 var util = require('ui/util');
 var styles = require('ui/handheld/loginWindow/styles');
 
-function logics(win, model, delegate) {
-	this.win = win;
-	this.model = model;
-	this.delegate = delegate;
-};
-	
-logics.prototype.winOpen = function() {
+exports.winOpen = function() {
 	
 
 	
 };
 
-logics.prototype.updateBoardDetail = function(groupId, boardId) {
+exports.updateBoardDetail = function(groupId, boardId) {
 	var self = this;
 	
 	// DBからデータロード
@@ -43,7 +37,3 @@ logics.prototype.updateBoardDetail = function(groupId, boardId) {
 	}
 self.win.tvrBody.wbvValue.html = messageHtml;
 };
-
-
-
-module.exports = logics;
